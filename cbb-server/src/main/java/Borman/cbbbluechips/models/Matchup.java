@@ -2,50 +2,32 @@ package Borman.cbbbluechips.models;
 
 public class Matchup {
 
-    private String matchupId;
-    private String teamOneId;
-    private String teamTwoId;
-    private String matchupDate;
-    private String matchupStartTime;
+    private Team team1;
+    private Team team2;
+    private String startTime;
 
-    public String getMatchupId() {
-        return matchupId;
+
+    public Team getTeam1() {
+        return team1;
     }
 
-    public void setMatchupId(String matchupId) {
-        this.matchupId = matchupId;
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
     }
 
-    public String getTeamOneId() {
-        return teamOneId;
+    public Team getTeam2() {
+        return team2;
     }
 
-    public void setTeamOneId(String teamOneId) {
-        this.teamOneId = teamOneId;
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
     }
 
-    public String getTeamTwoId() {
-        return teamTwoId;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTeamTwoId(String teamTwoId) {
-        this.teamTwoId = teamTwoId;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
-
-    public String getMatchupDate() {
-        return matchupDate;
-    }
-
-    public void setMatchupDate(String matchupDate) {
-        this.matchupDate = matchupDate;
-    }
-
-    public String getMatchupStartTime() {
-        return matchupStartTime;
-    }
-
-    public void setMatchupStartTime(String matchupStartTime) {
-        this.matchupStartTime = matchupStartTime;
-    }
-
 }

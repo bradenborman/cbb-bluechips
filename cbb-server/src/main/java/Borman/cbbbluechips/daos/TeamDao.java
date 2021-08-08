@@ -79,11 +79,11 @@ public class TeamDao {
     }
 
 
-    public void updateNextTeamPlayingByTeamID(String teamToUpdateId, String teamPlayingShortName) {
+    public void updateNextTeamPlayingByTeamID(String teamToUpdateId, String teamPlayingId) {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource()
                     .addValue("teamToUpdateId", teamToUpdateId)
-                    .addValue("teamPlayingShortName", teamPlayingShortName);
+                    .addValue("teamPlayingId", teamPlayingId); //My TEAM id not sports data
 
             namedParameterJdbcTemplate.update(TeamSQL.updateNextTeamPlaying, params);
         } catch (Exception e) {
@@ -102,7 +102,6 @@ public class TeamDao {
         }
     }
 
-    @Deprecated
     public void resetNextTeamPlayingForAll() {
         jdbcTemplate.update(TeamSQL.resetNextTeamPlayingForAll);
     }
@@ -138,4 +137,9 @@ public class TeamDao {
             return false;
         }
     }
+
+    public List<Team> selectTeamsPlayingToday() {
+        return namedParameterJdbcTemplate.query(TeamSQL.SELECT_TEAMS_PLAYING_NEXT_SET, new TeamRowDetailedMapper());
+    }
+
 }

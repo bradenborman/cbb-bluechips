@@ -8,10 +8,10 @@ export const team1: ITeam = {
   sharesOutstanding: 36,
   imgSrcName: "Duke.png",
   marketPrice: 5000,
-  isLocked: false,
+  locked: false,
   pointSpread: 7.5,
   priceHistory: ["64:5000", "32:4500", "16:6400"],
-  teamplayingNextName: "Kentucky"
+  nextGameTime: "Kentucky"
 };
 
 export const team2: ITeam = {
@@ -21,10 +21,10 @@ export const team2: ITeam = {
   sharesOutstanding: 84,
   imgSrcName: "Kentucky.png",
   marketPrice: 5000,
-  isLocked: false,
+  locked: false,
   pointSpread: -7.5,
   priceHistory: ["64:5000", "32:6500"],
-  teamplayingNextName: "Duke"
+  nextGameTime: "Duke"
 };
 
 export const matchup1: IMatchup = {
@@ -41,7 +41,7 @@ export const matchup2: IMatchup = {
     sharesOutstanding: 64,
     imgSrcName: "Alabama.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: 5,
     priceHistory: ["64:5000"]
   },
@@ -52,7 +52,7 @@ export const matchup2: IMatchup = {
     sharesOutstanding: 79,
     imgSrcName: "Utah.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: -5,
     priceHistory: ["64:5000"]
   },
@@ -67,7 +67,7 @@ export const matchup3: IMatchup = {
     sharesOutstanding: 64,
     imgSrcName: "Tennessee.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: 5,
     priceHistory: ["64:5000"]
   },
@@ -78,7 +78,7 @@ export const matchup3: IMatchup = {
     sharesOutstanding: 79,
     imgSrcName: "Virginia.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: -5,
     priceHistory: ["64:5000"]
   },
@@ -93,7 +93,7 @@ export const matchup4: IMatchup = {
     sharesOutstanding: 64,
     imgSrcName: "Michigan.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: 5,
     priceHistory: ["64:5000"]
   },
@@ -104,7 +104,7 @@ export const matchup4: IMatchup = {
     sharesOutstanding: 79,
     imgSrcName: "Dayton.png",
     marketPrice: 5000,
-    isLocked: false,
+    locked: false,
     pointSpread: -5,
     priceHistory: ["64:5000"]
   },

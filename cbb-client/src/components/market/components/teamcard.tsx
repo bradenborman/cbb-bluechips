@@ -12,9 +12,8 @@ export interface ITeamCardProps {
 
 export const TeamCard: React.FC<ITeamCardProps> = (props: ITeamCardProps) => {
   let history = useHistory();
-  const formattedMarketPrice = props.team.marketPrice.toLocaleString();
-  const favoritedTxt = props.team.pointSpread > 0 ? "underdog" : "favorite";
-  const tradeTxt = props.team.isLocked ? (
+
+  const tradeTxt = props.team.locked ? (
     <span>
       <i className="fa fa-lock" /> Locked
     </span>
@@ -29,18 +28,23 @@ export const TeamCard: React.FC<ITeamCardProps> = (props: ITeamCardProps) => {
     </Button>
   );
 
-  const pointSpradTxt: JSX.Element = (
+  const pointSpradTxt = (): JSX.Element => {
+    if (props.team.pointSpread != null) return;
     <span
       className={classNames(
         { underdog: props.team.pointSpread > 0 },
         { favorite: props.team.pointSpread < 0 }
       )}
     >
-      {props.team.pointSpread}
-    </span>
-  );
+      ({props.team.pointSpread}){" "}
+    </span>;
+
+    return null;
+  };
 
   const data: any = [["Round", "Price"]];
+
+  if (props.team.priceHistory.length == 0) data.push(["64", 5000]);
 
   props.team.priceHistory?.forEach(priceHistory => {
     const x = priceHistory.split(":");
@@ -65,12 +69,19 @@ export const TeamCard: React.FC<ITeamCardProps> = (props: ITeamCardProps) => {
       <Card.Title className="team-main-details">
         <span className="team-name">{props.team.teamName}</span>
         <Card.Text className="current-market-price">
-          ${formattedMarketPrice}
+          ${props.team?.currentMarketPrice.toLocaleString()}
         </Card.Text>
       </Card.Title>
       <Card.Body>
         <Card.Text className="point-spread-bar">
-          ({pointSpradTxt}) <small>{favoritedTxt}</small>
+          {pointSpradTxt}{" "}
+          <small>
+            {props.team.pointSpread
+              ? props.team?.pointSpread > 0
+                ? "underdog"
+                : "favorite"
+              : "Not Set"}
+          </small>
         </Card.Text>
         <Chart
           chartType="LineChart"

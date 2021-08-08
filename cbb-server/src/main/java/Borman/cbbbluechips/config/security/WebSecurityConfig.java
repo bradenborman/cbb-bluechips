@@ -46,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin", "/admin/**")
                 .hasAnyAuthority("CBB_ADMIN");
 
+
+        //TODO add "/api"
         http.authorizeRequests()
                 .antMatchers(
                         "/",

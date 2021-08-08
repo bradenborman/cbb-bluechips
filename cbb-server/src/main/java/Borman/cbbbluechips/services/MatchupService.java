@@ -1,0 +1,63 @@
+package Borman.cbbbluechips.services;
+
+import Borman.cbbbluechips.daos.MatchupDao;
+import Borman.cbbbluechips.models.Matchup;
+import Borman.cbbbluechips.models.Team;
+import Borman.cbbbluechips.models.responses.MarketResponse;
+import Borman.cbbbluechips.utilities.PriceHistoryUtility;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class MatchupService {
+
+    MatchupDao matchupDao;
+    TeamService teamService;
+    PriceHistoryService priceHistoryService;
+
+    public MatchupService(MatchupDao matchupDao, TeamService teamService, PriceHistoryService priceHistoryService) {
+        this.matchupDao = matchupDao;
+        this.teamService = teamService;
+        this.priceHistoryService = priceHistoryService;
+    }
+
+    public MarketResponse todaysMarket() {
+        MarketResponse response = new MarketResponse();
+
+        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(LocalDate.now())
+                .stream()
+                .map(this::createMatchup)
+                .collect(Collectors.toList());
+
+        response.setMatchups(teamsPlayingToday);
+
+
+        return response;
+    }
+
+
+    private Matchup createMatchup(Team team) {
+        Matchup matchup = new Matchup();
+
+
+        List<String> priceHistoryTeam1 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(team.getTeamId()));
+
+        team.setPriceHistory(priceHistoryTeam1);
+        matchup.setTeam1(team);
+
+
+        Team teamPlaying = teamService.getTeamByIdWithSharesOutstanding((team.getNextTeamPlaying()));
+
+        List<String> priceHistoryTeam2 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(teamPlaying.getTeamId()));
+
+
+        teamPlaying.setPriceHistory(priceHistoryTeam2);
+
+        matchup.setTeam2(teamPlaying);
+        matchup.setStartTime("7:30 PM");
+        return matchup;
+    }
+}

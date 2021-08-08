@@ -11,8 +11,8 @@ public class SportsDataUpdater {
 
     private final Logger logger = LoggerFactory.getLogger(SportsDataUpdater.class);
 
-    private SportsDataApiService sportsDataApiService;
-    private boolean shouldMakeApiCall;
+    SportsDataApiService sportsDataApiService;
+    boolean shouldMakeApiCall;
 
     public SportsDataUpdater(SportsDataApiService sportsDataApiService, @Qualifier("make_api_call") boolean shouldMakeApiCall) {
         this.sportsDataApiService = sportsDataApiService;
@@ -38,8 +38,8 @@ public class SportsDataUpdater {
     public void updateNextTeamPlayingAndOdds() {
         logger.info("Scheduled task hit: updateTeamsPlayingToday.");
         if(shouldMakeApiCall) {
-//            sportsDataApiService.updateTeamsPlayingToday();
-            sportsDataApiService.createMatchUps();
+            sportsDataApiService.updateTeamsPlayingToday();
+//            sportsDataApiService.createMatchUps();
         }
         else
             logger.info("ENV VAR Make_Api_Call set to false");

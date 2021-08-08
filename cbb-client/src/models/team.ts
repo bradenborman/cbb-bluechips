@@ -1,12 +1,16 @@
 export interface ITeam {
   teamId: number;
   teamName: string;
+  eliminated?: boolean;
   seed: number;
   marketPrice: number;
   sharesOutstanding: number;
   imgSrcName: string;
+  currentMarketPrice?: number;
   priceHistory?: string[];
-  isLocked: boolean;
+  priceHistoryString?: string; //Used
+  locked: boolean;
   pointSpread: number;
-  teamplayingNextName?: string;
+  nextGameTime?: string;
+  doesUserOwn?: boolean;
 }

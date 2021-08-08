@@ -5,8 +5,12 @@ import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.Team;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class TeamService {
+
+    Logger logger = LoggerFactory.getLogger(TeamService.class);
 
     TeamDao teamDao;
     PriceHistoryService priceHistoryService;
@@ -35,6 +41,7 @@ public class TeamService {
 //        if(TeamDataValidator.anyTeamsMissingPointSpread(allTeams))
 //            emailService.sendSetPointSpreadReminderEmail();
 
+        //TODO decide if team history is needed for this if its just admin using it
         if (onlyTeamsInTournament) {
             List<MarketValue> historicalData = priceHistoryService.fetchAllPriceHistory();
             allTeams.forEach(team -> applyTeamPriceHistory(team, historicalData));
@@ -81,4 +88,13 @@ public class TeamService {
     public boolean isTeamUnLocked(String teamId) {
         return !teamDao.isTeamLocked(teamId);
     }
+
+
+    @Cacheable(value = "teamsPlayingToday")
+    public List<Team> teamsPlayingToday(LocalDate now) {
+        //Selects with shares outstanding
+        logger.info("Querying for teams playing today..");
+        return teamDao.selectTeamsPlayingToday();
+    }
+
 }

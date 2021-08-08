@@ -57,8 +57,8 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
           clearInterval(interval);
           const lockedTeam1 = team1,
             lockedTeam2 = team2;
-          lockedTeam1.isLocked = true;
-          lockedTeam2.isLocked = true;
+          lockedTeam1.locked = true;
+          lockedTeam2.locked = true;
           setTeam1(lockedTeam1);
           setTeam2(lockedTeam2);
           setCountdownUntilLock("Game in progess");
@@ -79,7 +79,7 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
         <div className="team-name-with-img">
           <img
             className="team-icon"
-            src={"/img/teams/" + props.matchup.team1.imgSrcName}
+            src={"/img/teams/" + props.matchup.team1.teamName + ".png"}
             loading="lazy"
           />
           {props.matchup.team1.teamName}
@@ -89,7 +89,7 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
           {props.matchup.team2.teamName}
           <img
             className="team-icon"
-            src={"/img/teams/" + props.matchup.team2.imgSrcName}
+            src={"/img/teams/" + props.matchup.team2.teamName + ".png"}
             loading="lazy"
           />
         </div>

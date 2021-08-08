@@ -8,7 +8,7 @@ Admin functions:
 Game functions:
 
     - Navbar
-        - After logging out, clicking the title returns to portfolio page which user is not logged in
+        X After logging out, clicking the title returns to portfolio page which user is not logged in (/)
 
     - Portfolio Page:
         - Leaderboard Position

@@ -3,6 +3,7 @@ package Borman.cbbbluechips.models;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Team {
 
@@ -18,8 +19,12 @@ public class Team {
     private String pointSpread;
     private double currentMarketPrice;
     private String sharesOutstanding;
+
+    @Deprecated
     private String priceHistoryString;
     private boolean doesUserOwn;
+
+    private List<String> priceHistory;
 
 
     public String getTeamId() {
@@ -125,6 +130,14 @@ public class Team {
 
     public void setPriceHistoryString(String priceHistoryString) {
         this.priceHistoryString = priceHistoryString;
+    }
+
+    public List<String> getPriceHistory() {
+        return priceHistory;
+    }
+
+    public void setPriceHistory(List<String> priceHistory) {
+        this.priceHistory = priceHistory;
     }
 
     @Override
