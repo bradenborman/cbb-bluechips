@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/group")
-public class GroupController extends ControllerHelper {
+public class GroupController extends AuthenticatedController {
 
     UserGroupService userGroupService;
 
@@ -18,14 +18,14 @@ public class GroupController extends ControllerHelper {
 
     @PostMapping("/attempt-to-join")
     public ResponseEntity<String> joinGroup(@RequestBody AddUserToGroupRequest addUserToGroupRequest) {
-        addUserToGroupRequest.setUserId(getLoggedInUserId());
+        addUserToGroupRequest.setUserId(retrieveLoggedInUserId());
         userGroupService.addUserIdToGroup(addUserToGroupRequest);
         return ResponseEntity.ok("Success");
     }
 
     @PostMapping("/attempt-to-leave")
     public ResponseEntity<String> leaveGroup(@RequestBody RemoveUserFromGroupRequest removeUserFromGroupRequest) {
-        removeUserFromGroupRequest.setUserId(getLoggedInUserId());
+        removeUserFromGroupRequest.setUserId(retrieveLoggedInUserId());
         userGroupService.removeUserFromGroup(removeUserFromGroupRequest);
         return ResponseEntity.ok("Success");
     }

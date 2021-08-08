@@ -1,7 +1,9 @@
-export interface ITransactionRecord {
-  username: string;
-  action: string;
-  teamTraded: string;
-  amount: number;
-  dateTime: string;
+export interface ITransaction {
+  userId: string;
+  fullName: string;
+  teamName: string;
+  volumeTraded: number;
+  cashTraded: number;
+  tradeAction: string;
+  strTimeofTransaction: string;
 }

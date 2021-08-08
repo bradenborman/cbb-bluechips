@@ -1,4 +1,9 @@
 #transactions {
+  .loading-wrapper {
+    margin: 5em;
+    text-align: center;
+  }
+
   #filter-text {
     margin: 5px 10px;
     .fa-minus-circle {
@@ -11,6 +16,7 @@
     background-color: white;
     padding: 25px;
     border-radius: 20px;
+    transition: all 2s ease-in;
 
     thead {
       font-weight: bold;
@@ -23,6 +29,14 @@
     td.name,
     td.team {
       cursor: pointer;
+    }
+
+    tfoot {
+      text-align: center;
+      button {
+        margin: 0.5em auto;
+        display: block;
+      }
     }
   }
 }

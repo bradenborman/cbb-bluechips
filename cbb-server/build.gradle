@@ -38,13 +38,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation 'mysql:mysql-connector-java:8.0.26'
+
     implementation("commons-io:commons-io:2.6")
 
     compile "cglib:cglib:2.2"
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.2.2'
     compile group: "com.twilio.sdk", name: "twilio", version: "7.38.0"
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.24'
+//    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.24'
 
     implementation 'org.codehaus.groovy:groovy-all:2.4.11'
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"

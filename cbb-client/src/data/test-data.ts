@@ -1,6 +1,5 @@
 import { ITeam } from "../models/team";
 import { IMatchup } from "../models/matchup";
-import { ITransactionRecord } from "../models/transactionRecord";
 
 export const team1: ITeam = {
   teamId: 1,
@@ -111,48 +110,3 @@ export const matchup4: IMatchup = {
   },
   startTime: "9:45 PM"
 };
-
-export const transactionTestData: ITransactionRecord[] = [
-  {
-    username: "Mike Atkinson",
-    action: "BUY",
-    teamTraded: "Baylor",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  },
-  {
-    username: "Mike Atkinson",
-    action: "BUY",
-    teamTraded: "Baylor",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  },
-  {
-    username: "Braden Borman",
-    action: "BUY",
-    teamTraded: "Duke",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  },
-  {
-    username: "Braden Borman",
-    action: "BUY",
-    teamTraded: "Baylor",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  },
-  {
-    username: "Mike Atkinson",
-    action: "BUY",
-    teamTraded: "Duke",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  },
-  {
-    username: "Mike Atkinson",
-    action: "SELL",
-    teamTraded: "Duke",
-    amount: 52000,
-    dateTime: "	04/09/2021 02:33 PM"
-  }
-];
