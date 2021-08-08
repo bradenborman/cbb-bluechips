@@ -6,6 +6,8 @@ import Borman.cbbbluechips.models.SearchTag;
 import Borman.cbbbluechips.models.TradeRequest;
 import Borman.cbbbluechips.models.Transaction;
 import Borman.cbbbluechips.utilities.FilteredSearchUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class TransactionDao {
+
+    Logger logger = LoggerFactory.getLogger(TransactionDao.class);
+
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private JdbcTemplate jdbcTemplate;
@@ -83,7 +88,7 @@ public class TransactionDao {
         return namedParameterJdbcTemplate.query(TransactionSQL.getAllTransactions, new TransactionRowMapper());
     }
 
-    public List<Transaction> getFilteredTransactions( List<SearchTag> tags) {
+    public List<Transaction> getFilteredTransactions(List<SearchTag> tags) {
         MapSqlParameterSource inQueryParams = new MapSqlParameterSource();
         inQueryParams.addValue("tags", tags.stream().map(SearchTag::getSearchValue).collect(Collectors.toList()));
         return namedParameterJdbcTemplate.query(FilteredSearchUtility.buildSQL(), inQueryParams, new TransactionRowMapper());
@@ -91,8 +96,8 @@ public class TransactionDao {
 
     public void deleteUsersTransactions(String fullName) {
         try {
-        MapSqlParameterSource params = new MapSqlParameterSource().addValue("fullName", fullName);
-        namedParameterJdbcTemplate.update(TransactionSQL.deleteUsersTransactions, params);
+            MapSqlParameterSource params = new MapSqlParameterSource().addValue("fullName", fullName);
+            namedParameterJdbcTemplate.update(TransactionSQL.deleteUsersTransactions, params);
         } catch (Exception e) {
             System.out.println(e);
         }

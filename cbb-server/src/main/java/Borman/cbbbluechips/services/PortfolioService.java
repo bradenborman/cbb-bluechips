@@ -30,7 +30,7 @@ public class PortfolioService {
         GameData gameData = new GameData();
         gameData.setTotalMoneyInPlay(ownsService.getTotalMoneyInPlay());
         gameData.setCurrentRound(gameSettingsService.getCurrentRound());
-        gameData.setTotalTransactionsCount(transactionService.getTransactionCountTotal());
+        gameData.setTotalTransactionsCount(transactionService.retrieveTransactionCount());
         return gameData;
     }
 

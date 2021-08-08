@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -25,12 +26,15 @@ public class TransactionService {
 
     Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
+    private TransactionCacheService transactionCacheService;
     private TransactionDao transactionDao;
     private TeamDao teamDao;
     private UserService userService;
     private OwnsDao ownsDao;
 
-    public TransactionService(TransactionDao transactionDao, TeamDao teamDao, UserService userService, OwnsDao ownsDao) {
+    public TransactionService(TransactionCacheService transactionCacheService, TransactionDao transactionDao,
+                              TeamDao teamDao, UserService userService, OwnsDao ownsDao) {
+        this.transactionCacheService = transactionCacheService;
         this.transactionDao = transactionDao;
         this.teamDao = teamDao;
         this.userService = userService;
@@ -101,7 +105,7 @@ public class TransactionService {
         return transaction;
     }
 
-    Integer getTransactionCountTotal() {
+    public int retrieveTransactionCount() {
         return transactionDao.getTransactionCountTotal();
     }
 
@@ -116,18 +120,20 @@ public class TransactionService {
     }
 
     public List<Transaction> allTransactions() {
-        List<Transaction> transactions = transactionDao.getAllTransactions();
-        Collections.reverse(transactions);
-        return transactions;
+        LocalDateTime startTime = LocalDateTime.now();
+        Integer transactionsCount = retrieveTransactionCount();
+        List<Transaction> results = transactionCacheService.allTransactions(transactionsCount);
+        logger.info("Retrieval of data took: {} milli seconds", Duration.between(startTime, LocalDateTime.now()).toMillis());
+        Collections.reverse(results);
+        return results;
     }
 
+    @Deprecated
     public List<Transaction> getLatest50Transactions() {
-        List<Transaction> transactions = transactionDao.getLatest50Transactions();
-//        Collections.reverse(transactions);
-        return transactions;
+        return transactionDao.getLatest50Transactions();
     }
 
-
+    @Deprecated
     public List<Transaction> getTransactionsAfter50() {
         return transactionDao.getTransactionsAfter50()
                 .stream()
@@ -135,6 +141,7 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
+    @Deprecated
     public List<Transaction> getTransactionsAfterOffset(int offset) {
         return transactionDao.getTransactionsAfter50()
                 .stream()

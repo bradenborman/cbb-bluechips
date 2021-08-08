@@ -1,11 +1,13 @@
 package Borman.cbbbluechips.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -55,6 +57,14 @@ public class CCBConfig {
     @Bean("signUpAllowed")
     public boolean getSignUpAllowed() {
         return Boolean.parseBoolean(System.getenv("signUpAllowed"));
+    }
+
+    @Bean
+    public CaffeineCacheManager getCaffeineCacheManager() {
+        CaffeineCacheManager manager = new CaffeineCacheManager();
+        manager.setCacheNames(Collections.singletonList("recentTransactions"));
+        manager.setCacheSpecification("maximumSize=500,expireAfterAccess=30m");
+        return manager;
     }
 
 }
