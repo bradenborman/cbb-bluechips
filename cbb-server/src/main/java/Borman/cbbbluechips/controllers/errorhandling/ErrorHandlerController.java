@@ -1,19 +1,22 @@
 package Borman.cbbbluechips.controllers.errorhandling;
 
+import Borman.cbbbluechips.models.exceptions.UserNotLoggedInException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ErrorHandlerController extends ResponseEntityExceptionHandler {
+public class ErrorHandlerController {
 
     private Logger logger = LoggerFactory.getLogger(ErrorHandlerController.class);
 
-//    @ExceptionHandler(CommunicationsException.class)
-//    public ResponseEntity<Object> catchError(final java.io.EOFException e) {
-//        logger.info("ERROR WAS CAUGHT WITH CONNECTION TO DATABASE -- sending to portfolio");
-//        return ResponseEntity.status(HttpStatus.SEE_OTHER).build();
-//    }
+    @ExceptionHandler(UserNotLoggedInException.class)
+    public ResponseEntity<String> catchError(Exception e) {
+        logger.warn("UserNotLoggedInException: {}", e.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
 
 }

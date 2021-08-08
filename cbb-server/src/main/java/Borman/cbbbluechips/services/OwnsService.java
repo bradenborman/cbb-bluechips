@@ -4,6 +4,9 @@ import Borman.cbbbluechips.daos.OwnsDao;
 import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.daos.UserDao;
 import Borman.cbbbluechips.models.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +16,8 @@ import java.util.Optional;
 
 @Service
 public class OwnsService {
+
+    Logger logger = LoggerFactory.getLogger(OwnsService.class);
 
     private OwnsDao ownsDao;
     private TeamDao teamDao;
@@ -82,6 +87,12 @@ public class OwnsService {
         return ownsDao.getUsersWhoOwnedTeamWithTextAlertOn(teamId);
     }
 
+    //TODO cache this and other net-worth things based on last update of admin and price.
+    //Would need to find a way to query for either last price update or something to track that
+
+    // Manually calculating
+    //TODO could cache on userId, last lastPriceChange
+    // Would only want to cache on net-worth as cash and portfolio value can flutter in-between rounds
     public double retrieveUserNetWorthById(String id) {
         double portfolioValue = ownsDao.getPortfolioValue(id);
         double cash = ownsDao.getFundsAvailable(id);
@@ -95,7 +106,9 @@ public class OwnsService {
         return leader.map(user -> String.valueOf(user.getCash())).orElse("0");
     }
 
-    List<LeaderBoardUser> retrieveLeaderboard() {
+    @Cacheable(value = "leaderboard")
+    public List<LeaderBoardUser> retrieveLeaderboard(String lastUpdate) {
+        logger.info("Not Cached since last update: {}", lastUpdate);
         List<User> playersId = getUsersWithSetNetworth();
         playersId.sort(Comparator.comparing(User::getCash).reversed());
         List<LeaderBoardUser> leaders = new ArrayList<>();

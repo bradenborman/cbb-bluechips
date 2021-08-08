@@ -12,12 +12,14 @@ import { IGamedata } from "../../models/gameData";
 import { IUserGamedata } from "../../models/userGameData";
 import Loader from "react-loader-spinner";
 import { getDisplayTextCurrentRound } from "../../utilities/currentRoundUtility";
+import { useHistory } from "react-router";
 
 export interface IPortfolioProps {}
 
 export const Portfolio: React.FC<IPortfolioProps> = (
   props: IPortfolioProps
 ) => {
+  let history = useHistory();
   //TODO: cleanup first info card make sleeker
   //TODO: display upcoming games in card
 
@@ -33,6 +35,7 @@ export const Portfolio: React.FC<IPortfolioProps> = (
       })
       .catch(error => {
         console.log(error);
+        if (error.response.status == "403") history.push("/login");
       });
   }, []);
 

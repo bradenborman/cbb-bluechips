@@ -1,0 +1,44 @@
+Admin functions:
+    - Make all to backend on point spread update
+    - Remove define matchups section. That is already a thing that happens on cron job
+    - New Functionality to update price
+    - On price update, update new table/column with Timestamp of lastPriceChange to use for caching of things. (Leaderboard and net-worth)
+    - Finish User Settings functions
+
+Game functions:
+
+    - Navbar
+        - After logging out, clicking the title returns to portfolio page which user is not logged in
+
+    - Portfolio Page:
+        - Leaderboard Position
+        - Total Games left logic
+        - Upcoming Games - show imgs and time
+
+    - Market Page:
+        - Call to get live data
+        - Check to not allow buy team if you own shares of competitor
+
+    - Leaderboard Page:
+        - Setup Paypal option to get extra cash -> will need to update lastPriceChange in DB
+
+    - Rules/How to play Page:
+        - Update for new 2021 rules of calculation to new value. Winner goes up $100 for each point that beats spread and loser only goes down $50 per point
+        - Remove groups section lol
+
+    - Transaction Page:
+        - Monitor page and document things as needed
+        - Style buttons at end of table
+
+    - Calculator Page:
+        - Everything
+
+    - Settings Page:
+        - Subscribe to warnings backend -> update table in user column that they can get a popup on trade so they know what they want to do when buying
+
+    - Login/Sign up Page:
+        - Forgot password
+
+    - Terms and services Page
+            - Everything
+
