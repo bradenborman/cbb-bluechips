@@ -59,7 +59,7 @@ public class MatchupService {
         teamPlaying.setPriceHistory(priceHistoryTeam2);
 
         matchup.setTeam2(teamPlaying);
-        matchup.setStartTime(LocalDateTime.now().plusMinutes(1).format(DateTimeFormatter.ofPattern("hh:mm a")));
+        matchup.setStartTime(LocalDateTime.now().plusHours(2).plusMinutes(25).format(DateTimeFormatter.ofPattern("h:mm a")));
         return matchup;
     }
 }
