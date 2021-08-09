@@ -16,8 +16,9 @@ Game functions:
         - Upcoming Games - show imgs and time
 
     - Market Page:
-        - Call to get live data
+        X Call to get live data
         - Check to not allow buy team if you own shares of competitor
+        - Will need to make sure that time and event listener are working (start-clock)
 
     - Leaderboard Page:
         - Setup Paypal option to get extra cash -> will need to update lastPriceChange in DB

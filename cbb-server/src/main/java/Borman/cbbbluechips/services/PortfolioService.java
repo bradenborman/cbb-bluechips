@@ -36,20 +36,20 @@ public class PortfolioService {
 
     public UserGameData retrieveUsersGameData(String userId) {
         UserGameData x = new UserGameData();
-        logger.info("Getting users net-worth");
+//        logger.info("Getting users net-worth");
         x.setNetWorth(ownsService.retrieveUserNetWorthById(userId));
 
-        logger.info("Getting users cash");
+//        logger.info("Getting users cash");
         x.setCash(userService.getUserCashById(userId));
 
-        logger.info("Getting users full-name");
+//        logger.info("Getting users full-name");
         x.setFullName(userService.getUserFullName(userId));
 
-        logger.info("Getting users leaderboard pos");
+//        logger.info("Getting users leaderboard pos");
 //        x.setLeaderboardPosition(leaderboardService.getUsersLeaderPosition(userId));
         x.setLeaderboardPosition(1000);
 
-        logger.info("Getting users transaction count");
+//        logger.info("Getting users transaction count");
         x.setUserTransactionCount(transactionService.transactionCountByUser(userId));
 
         return x;

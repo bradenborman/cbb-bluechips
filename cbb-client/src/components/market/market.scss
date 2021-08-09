@@ -1,4 +1,9 @@
 #market-wrapper {
+  .loading-wrapper {
+    margin-top: 5em;
+    text-align: center;
+  }
+
   #all-matchups-wrapper {
     .match-up {
       margin-bottom: 30px;
@@ -140,6 +145,12 @@
             }
           }
         }
+      }
+    }
+
+    .no-games-message {
+      h2 {
+        font-family: "Alfa Slab One", sans-serif;
       }
     }
   }

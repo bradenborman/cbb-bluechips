@@ -8,6 +8,8 @@ import Borman.cbbbluechips.utilities.PriceHistoryUtility;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +59,7 @@ public class MatchupService {
         teamPlaying.setPriceHistory(priceHistoryTeam2);
 
         matchup.setTeam2(teamPlaying);
-        matchup.setStartTime("7:30 PM");
+        matchup.setStartTime(LocalDateTime.now().plusMinutes(1).format(DateTimeFormatter.ofPattern("hh:mm a")));
         return matchup;
     }
 }
