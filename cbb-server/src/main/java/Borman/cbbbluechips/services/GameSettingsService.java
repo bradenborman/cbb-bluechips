@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -44,7 +45,10 @@ public class GameSettingsService {
     }
 
     public List<Team> getTeamsPlayingToday() {
-       return settingsDao.getTeamsPlayingToday();
+        List<Team> list = new ArrayList<>();
+        list.addAll(settingsDao.getTeamsPlayingTodayHomeTeam());
+        list.addAll(settingsDao.getTeamsPlayingTodayAwayTeam());
+        return list;
     }
 
     @Transactional

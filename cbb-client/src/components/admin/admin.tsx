@@ -3,7 +3,7 @@ import { Page } from "../general/page";
 import { Row, Col, Tab, ListGroup } from "react-bootstrap";
 import { GameSettings } from "./pages/gameSettings";
 import { PointSpreads } from "./pages/pointSpreads";
-import { MatchupMaker } from "./pages/matchupMaker";
+import { UpdateMarketPrice } from "./pages/updateMarketPrice";
 import { UserSettings } from "./pages/userSettings";
 import { UpdateSeeds } from "./pages/updateSeeds";
 
@@ -12,7 +12,7 @@ export interface IAdminProps {}
 export const Admin: React.FC<IAdminProps> = (props: IAdminProps) => {
   return (
     <Page pageId="admin-wrapper">
-      <Tab.Container id="admin-menu" defaultActiveKey="#set-point-spreads">
+      <Tab.Container id="admin-menu" defaultActiveKey="#update-price">
         <Row>
           <Col lg={3}>
             <ListGroup>
@@ -25,8 +25,8 @@ export const Admin: React.FC<IAdminProps> = (props: IAdminProps) => {
               <ListGroup.Item action href="#set-point-spreads">
                 Set Point Spreads
               </ListGroup.Item>
-              <ListGroup.Item action href="#matchups">
-                Define Matchups
+              <ListGroup.Item action href="#update-price">
+                Update Market Price
               </ListGroup.Item>
               <ListGroup.Item action href="#user-settings">
                 User Settings
@@ -44,8 +44,8 @@ export const Admin: React.FC<IAdminProps> = (props: IAdminProps) => {
               <Tab.Pane eventKey="#set-point-spreads">
                 <PointSpreads />
               </Tab.Pane>
-              <Tab.Pane eventKey="#matchups">
-                <MatchupMaker />
+              <Tab.Pane eventKey="#update-price">
+                <UpdateMarketPrice />
               </Tab.Pane>
               <Tab.Pane eventKey="#user-settings">
                 <UserSettings />

@@ -34,8 +34,15 @@ public class GameSettingsDao {
     }
 
 
-    public List<Team> getTeamsPlayingToday() {
+    public List<Team> getTeamsPlayingTodayHomeTeam() {
         String sql = "SELECT * FROM teams WHERE Next_Team_Playing is not null AND seed > 0;";
+        return jdbcTemplate.query(sql, new TeamRowMapper());
+    }
+
+    public List<Team> getTeamsPlayingTodayAwayTeam() {
+        List<String> awayIds = jdbcTemplate.queryForList("SELECT Next_Team_Playing FROM teams WHERE Next_Team_Playing is not null AND seed > 0;", String.class);
+
+        String sql = "SELECT * FROM teams WHERE Team_ID in (" + String.join(", ",awayIds) + ") AND seed > 0;";
         return jdbcTemplate.query(sql, new TeamRowMapper());
     }
 
