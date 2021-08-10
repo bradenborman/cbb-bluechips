@@ -3,6 +3,7 @@ package Borman.cbbbluechips.controllers.api.admin;
 import Borman.cbbbluechips.controllers.AuthenticatedController;
 import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
 import Borman.cbbbluechips.models.responses.GameSettingsResponse;
 import Borman.cbbbluechips.services.*;
 import org.springframework.http.ResponseEntity;
@@ -71,13 +72,13 @@ public class AdminController extends AuthenticatedController {
     }
 
 
-//    @PostMapping("/update-price")
-//    public String updateMarketPrice(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "nextRoundPrice") double nextRoundPrice,
-//                                    @RequestParam(value = "roundSelector") int roundId,
-//                                    @RequestParam(value = "teamId") int teamId) {
-//        adminService.updateMarketPrice(teamName, nextRoundPrice, roundId);
-//        return "redirect:/admin/update/teams?teamId=" + teamId;
-//    }
+    @PostMapping("/update-price")
+    public ResponseEntity<Void> updateMarketPrice(@RequestBody UpdateMarketPriceRequest updateMarketPriceRequest) {
+        adminService.updateMarketPrice(updateMarketPriceRequest);
+        return ResponseEntity.ok().build();
+    }
+
+
 //
 //    @PostMapping("/update-locked")
 //    public String updateLocked(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "isEliminated", defaultValue = "false") boolean isEliminated,
@@ -85,9 +86,6 @@ public class AdminController extends AuthenticatedController {
 //        adminService.updateLockedAndEliminated(teamName, isEliminated, isLocked);
 //        return "redirect:/admin/update/teams";
 //    }
-//
-//
-//
 //
 //    @PostMapping("/update-pointspread")
 //    public String updatePointSpread(@RequestParam(value = "teamName") String[] teamName, @RequestParam(value = "nextPointSpread") String[] nextPointSpread) {

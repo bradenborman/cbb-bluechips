@@ -15,8 +15,11 @@ export const UpdateMarketPrice: React.FC<IUpdateMarketPriceProps> = (
   //User selects from dropdown
   const [teamIdToUpdate, setTeamIdToUpdate] = useState<string>();
 
-  //User selects from dropdown
+  //User entered in txt box
   const [updatedPrice, setUpdatedPrice] = useState<string>();
+
+  //User entered in txt box
+  const [roundToUpdate, setRoundToUpdate] = useState<string>();
 
   useEffect(() => {
     axios
@@ -29,6 +32,23 @@ export const UpdateMarketPrice: React.FC<IUpdateMarketPriceProps> = (
         console.log(error);
       });
   }, []);
+
+  const submitUpdate = () => {
+    axios
+      .post(`/api/admin/update-price`, {
+        teamId: teamIdToUpdate,
+        nextRoundPrice: updatedPrice,
+        nextRound: roundToUpdate
+      })
+      .then(response => {
+        setTeamIdToUpdate(undefined);
+        setUpdatedPrice(undefined);
+        setRoundToUpdate(undefined);
+      })
+      .catch(x => {
+        console.log(x);
+      });
+  };
 
   const teamSelectOptions = (): JSX.Element => {
     if (allTeams == undefined)
@@ -69,7 +89,10 @@ export const UpdateMarketPrice: React.FC<IUpdateMarketPriceProps> = (
         return (
           updatedPrice != undefined &&
           updatedPrice != null &&
-          updatedPrice.length > 0
+          updatedPrice.length > 0 &&
+          roundToUpdate != undefined &&
+          roundToUpdate != null &&
+          roundToUpdate.length > 0
         );
       };
 
@@ -96,13 +119,19 @@ export const UpdateMarketPrice: React.FC<IUpdateMarketPriceProps> = (
               size={5}
             />
           </div>
+          <div className="input-wrapper">
+            <label htmlFor="roundToUpdate">Round:</label>
+            <input
+              name="roundToUpdate"
+              onChange={e => setRoundToUpdate(e.target.value)}
+              value={roundToUpdate}
+              maxLength={2}
+              size={2}
+            />
+          </div>
           <div>
             <button
-              onClick={e =>
-                alert(
-                  `Make call to update ${teamIdToUpdate}'s price to ${updatedPrice}`
-                )
-              }
+              onClick={e => submitUpdate()}
               disabled={!isSumbitBtnDisabled()}
             >
               Update Price

@@ -7,8 +7,10 @@ import Borman.cbbbluechips.daos.AdminDao;
 import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;
+import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
 import Borman.cbbbluechips.twilio.TwiloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,7 @@ public class AdminService {
     }
 
 
+    @Deprecated
     @Transactional
     public void updateMarketPrice(String teamName, double nextRoundPrice, int roundId) {
         MarketValue newMarketValue = MarketValueBuilder.aMarketValue()
@@ -91,6 +94,34 @@ public class AdminService {
 
     }
 
+    @Transactional
+    public void updateMarketPrice(UpdateMarketPriceRequest updateMarketPriceRequest) {
+
+        double parsedPrice = Double.parseDouble(updateMarketPriceRequest.getNextRoundPrice());
+
+        Team team = teamDao.getTeamById(updateMarketPriceRequest.getTeamId());
+
+        MarketValue newMarketValue = MarketValueBuilder.aMarketValue()
+                .withPrice(parsedPrice)
+                .withRoundId(updateMarketPriceRequest.getNextRound())
+                .withTeamName(team.getTeamName())
+                .withTeamId(team.getTeamId())
+                .build();
+
+        logger.info(String.format("New Price submitted: %s", newMarketValue.toString()));
+        adminDao.updateMarketPriceByTeamAndRound(newMarketValue);
+
+        boolean isThere = adminDao.checkForRoundPriceExists(newMarketValue);
+        if (isThere)
+            adminDao.archivePriceUpdateRenew(newMarketValue);
+        else
+            adminDao.archivePriceUpdateCreate(newMarketValue);
+
+
+        //TODO enable again
+//        twiloService.sendPriceChangeAlert(newMarketValue);
+
+    }
 
     public void processUpdatePointSpreadRequest(List<String> teamNames, List<String> pointSpreads) {
         if (teamNames.size() != pointSpreads.size())

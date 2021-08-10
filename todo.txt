@@ -4,6 +4,7 @@ Admin functions:
     - New Functionality to update price
     - On price update, update new table/column with Timestamp of lastPriceChange to use for caching of things. (Leaderboard and net-worth)
     - Finish User Settings functions
+    - Update market price not updating the current market price. Look into why not
 
 Game functions:
 
