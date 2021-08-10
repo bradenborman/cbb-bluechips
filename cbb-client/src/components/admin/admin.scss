@@ -75,6 +75,33 @@
       }
     }
   }
+
+  #set-market-price {
+    div.select-wrapper {
+      margin-bottom: 2em;
+      select {
+        padding: 5px 10px;
+      }
+    }
+    div.update-elements-wrapper {
+      .input-wrapper {
+        display: inline-block;
+        margin: 10px;
+        label {
+          margin-right: 5px;
+        }
+
+        input {
+          padding: 2px;
+          text-align: center;
+        }
+      }
+
+      button {
+        margin-top: 30px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 600px) {

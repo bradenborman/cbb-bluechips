@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Card, ToggleButton } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import axios from "axios";
-import { IGameSettingsResponse } from "../../../models/gameSettingsResponse";
 import Loader from "react-loader-spinner";
 
 export interface IGameSettingsProps {}
