@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -56,7 +57,7 @@ public class AdminController extends AuthenticatedController {
 
     @GetMapping("/teams-playing-today")
     public ResponseEntity<List<Team>> teamsPlayingToday() {
-        return ResponseEntity.ok(settingsService.getTeamsPlayingToday());
+        return ResponseEntity.ok(teamService.teamsPlayingToday(LocalDate.now()));
     }
 
     @PostMapping("/update-seed")

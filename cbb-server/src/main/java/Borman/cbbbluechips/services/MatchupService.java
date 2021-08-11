@@ -29,7 +29,7 @@ public class MatchupService {
     public MarketResponse todaysMarket() {
         MarketResponse response = new MarketResponse();
 
-        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(LocalDate.now())
+        List<Matchup> teamsPlayingToday = teamService.homeTeamsPlayingToday(LocalDate.now())
                 .stream()
                 .map(this::createMatchup)
                 .collect(Collectors.toList());

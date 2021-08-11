@@ -45,11 +45,12 @@ public class TeamSQL {
 
 //    public static final String SELECT_TEAMS_PLAYING_NEXT_SET = "SELECT * FROM teams WHERE Next_Team_Playing is not null";
 
-    public static final String SELECT_TEAMS_PLAYING_NEXT_SET = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
+    public static final String SELECT_TEAMS_PLAYING_HOME_TEAM = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
             "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name " +
             "FROM teams " +
             "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
             "WHERE Next_Team_Playing is not null group by teams.Team_ID " +
+            "AND seed > 0 " +
             "ORDER by Next_Team_Playing is not null desc, is_out ASC, seed asc";
 
 

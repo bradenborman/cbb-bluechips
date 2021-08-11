@@ -11,10 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -89,12 +86,21 @@ public class TeamService {
         return !teamDao.isTeamLocked(teamId);
     }
 
-
     @Cacheable(value = "teamsPlayingToday")
     public List<Team> teamsPlayingToday(LocalDate now) {
         //Selects with shares outstanding
         logger.info("Querying for teams playing today..");
-        return teamDao.selectTeamsPlayingToday();
+        List<Team> list = new ArrayList<>();
+        list.addAll(teamDao.getTeamsPlayingTodayHomeTeam());
+        list.addAll(teamDao.getTeamsPlayingTodayAwayTeam());
+        return list;
+    }
+
+    @Cacheable(value = "homeTeamsPlayingToday")
+    public List<Team> homeTeamsPlayingToday(LocalDate now) {
+        //Selects with shares outstanding
+        logger.info("Querying for teams playing today..");
+        return teamDao.getTeamsPlayingTodayHomeTeam();
     }
 
 }

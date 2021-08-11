@@ -2,15 +2,11 @@ package Borman.cbbbluechips.daos;
 
 import Borman.cbbbluechips.config.GameRules;
 import Borman.cbbbluechips.daos.sql.GameSettingsSQL;
-import Borman.cbbbluechips.mappers.TeamRowMapper;
-import Borman.cbbbluechips.models.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class GameSettingsDao {
@@ -31,19 +27,6 @@ public class GameSettingsDao {
     public void updateCurrentRound(String round) {
         String sql = "UPDATE game_info SET Current_Round = " + round + " WHERE Year = '2019';";
         jdbcTemplate.update(sql);
-    }
-
-
-    public List<Team> getTeamsPlayingTodayHomeTeam() {
-        String sql = "SELECT * FROM teams WHERE Next_Team_Playing is not null AND seed > 0;";
-        return jdbcTemplate.query(sql, new TeamRowMapper());
-    }
-
-    public List<Team> getTeamsPlayingTodayAwayTeam() {
-        List<String> awayIds = jdbcTemplate.queryForList("SELECT Next_Team_Playing FROM teams WHERE Next_Team_Playing is not null AND seed > 0;", String.class);
-
-        String sql = "SELECT * FROM teams WHERE Team_ID in (" + String.join(", ",awayIds) + ") AND seed > 0;";
-        return jdbcTemplate.query(sql, new TeamRowMapper());
     }
 
     public void deleteAllTransactionFromGame() {

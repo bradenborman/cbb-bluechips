@@ -44,11 +44,11 @@ public class ViewControllerAdmin {
         return "set_seeds";
     }
 
-    @RequestMapping("/set/pointspread")
-    public String setPointSpread(Model model) {
-        model.addAttribute("teams", gameSettingsService.getTeamsPlayingToday());
-        return "set_pointspread";
-    }
+//    @RequestMapping("/set/pointspread")
+//    public String setPointSpread(Model model) {
+//        model.addAttribute("teams", gameSettingsService.getTeamsPlayingToday());
+//        return "set_pointspread";
+//    }
 
     @RequestMapping("/manage-groups")
     public String mangeUserGroups(Model model) {

@@ -27,6 +27,7 @@ public class TeamDao {
         return jdbcTemplate.query(TeamSQL.getAllTeams, new TeamRowMapper());
     }
 
+    //Broken with not null - playing next id
     public List<Team> onlyTeamsInTournament() {
         return jdbcTemplate.query(TeamSQL.getTournamentTeams, new TeamRowMapper());
     }
@@ -117,7 +118,6 @@ public class TeamDao {
         }
     }
 
-
     public String getNameByShortName(String teamShortName) {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource().addValue("teamShortName", teamShortName);
@@ -138,8 +138,15 @@ public class TeamDao {
         }
     }
 
-    public List<Team> selectTeamsPlayingToday() {
-        return namedParameterJdbcTemplate.query(TeamSQL.SELECT_TEAMS_PLAYING_NEXT_SET, new TeamRowDetailedMapper());
+    public List<Team> getTeamsPlayingTodayHomeTeam() {
+        return namedParameterJdbcTemplate.query(TeamSQL.SELECT_TEAMS_PLAYING_HOME_TEAM, new TeamRowDetailedMapper());
+    }
+
+    public List<Team> getTeamsPlayingTodayAwayTeam() {
+        List<String> awayIds = jdbcTemplate.queryForList("SELECT Next_Team_Playing FROM teams WHERE Next_Team_Playing is not null AND seed > 0;", String.class);
+
+        String sql = "SELECT * FROM teams WHERE Team_ID in (" + String.join(", ",awayIds) + ") AND seed > 0;";
+        return jdbcTemplate.query(sql, new TeamRowMapper());
     }
 
 }

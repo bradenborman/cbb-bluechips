@@ -45,7 +45,7 @@ public class CCBConfig {
     @Bean
     public CaffeineCacheManager getCaffeineCacheManager() {
         CaffeineCacheManager manager = new CaffeineCacheManager();
-        manager.setCacheNames(Arrays.asList("recentTransactions", "leaderboard", "teamsPlayingToday"));
+        manager.setCacheNames(Arrays.asList("recentTransactions", "leaderboard", "homeTeamsPlayingToday", "teamsPlayingToday"));
         manager.setCacheSpecification("maximumSize=500,expireAfterAccess=30m");
         return manager;
     }
