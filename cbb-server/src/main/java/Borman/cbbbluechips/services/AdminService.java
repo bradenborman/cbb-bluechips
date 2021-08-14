@@ -108,7 +108,7 @@ public class AdminService {
                 .withTeamId(team.getTeamId())
                 .build();
 
-        logger.info(String.format("New Price submitted: %s", newMarketValue.toString()));
+        logger.info("New Price submitted: {}", newMarketValue.toString());
         adminDao.updateMarketPriceByTeamAndRound(newMarketValue);
 
         boolean isThere = adminDao.checkForRoundPriceExists(newMarketValue);
