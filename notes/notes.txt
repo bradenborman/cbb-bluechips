@@ -2,3 +2,9 @@ https://w2.cleardb.net/faqs-1/#multi_7
 
 Free plans maz_questions: 3600
 paid jumps to 18,000 per hour
+
+example
+git remote add origin https://<access-token-name>:<access-token>@gitlab.com/myuser/myrepo.git
+
+command
+git remote add origin https://shelter-token:<access_token>@github.com/bradenborman/cbb-bluechips.git
