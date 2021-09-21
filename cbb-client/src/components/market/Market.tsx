@@ -18,6 +18,7 @@ export const Market: React.FC<IMarketProps> = (props: IMarketProps) => {
       .get("/api/market")
       .then(response => {
         setMarketResponse(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);

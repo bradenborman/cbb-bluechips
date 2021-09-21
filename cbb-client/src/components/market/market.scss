@@ -158,32 +158,34 @@
 
 @media screen and (max-width: 600px) {
   #market-wrapper {
-    .match-up {
-      .card.match-up-card {
-        .match-up-header {
-          .team-name-matchup-wrapper {
-            font-size: 0.7em;
-            .team-name-with-img {
-              .team-icon {
-                width: 50px;
-                height: 50px;
-                margin: 0px;
+    #all-matchups-wrapper {
+      .match-up {
+        .card.match-up-card {
+          .match-up-header {
+            .team-name-matchup-wrapper {
+              font-size: 0.7em;
+              .team-name-with-img {
+                .team-icon {
+                  width: 40px;
+                  height: 40px;
+                  margin: 0.5em;
+                }
               }
             }
-          }
 
-          .start-time {
-            font-size: 0.8em;
+            .start-time {
+              font-size: 0.8em;
+            }
           }
         }
       }
-    }
-    .row {
-      margin-bottom: 0px;
-    }
+      .row {
+        margin-bottom: 0px;
+      }
 
-    .card {
-      margin-bottom: 2vh;
+      .card {
+        margin-bottom: 2vh;
+      }
     }
   }
 }

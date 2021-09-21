@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Chart from "react-google-charts";
 import Loader from "react-loader-spinner";
 import { useHistory } from "react-router";
+import useWindowDimensions from "../../../utilities/windowDimensions";
 
 export interface ITeamCardProps {
   team: ITeam;
@@ -12,6 +13,7 @@ export interface ITeamCardProps {
 
 export const TeamCard: React.FC<ITeamCardProps> = (props: ITeamCardProps) => {
   let history = useHistory();
+  const { height, width } = useWindowDimensions();
 
   const tradeTxt = props.team.locked ? (
     <span>
@@ -86,7 +88,8 @@ export const TeamCard: React.FC<ITeamCardProps> = (props: ITeamCardProps) => {
         <Chart
           chartType="LineChart"
           width="100%"
-          height="175px"
+          className="chart"
+          height={width > 390 ? "175px" : "100px"}
           data={data}
           loader={loader}
           options={graphOptions}

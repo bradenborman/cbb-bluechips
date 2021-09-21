@@ -5,6 +5,8 @@ import Borman.cbbbluechips.models.Matchup;
 import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.responses.MarketResponse;
 import Borman.cbbbluechips.utilities.PriceHistoryUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class MatchupService {
+
+    Logger logger = LoggerFactory.getLogger(MatchupService.class);
 
     MatchupDao matchupDao;
     TeamService teamService;
@@ -31,7 +35,10 @@ public class MatchupService {
                 .stream()
                 .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)
+                .sorted(Matchup::compareTo)
+                .peek(x -> logger.info("{}", x.toString()))
                 .collect(Collectors.toList());
+
 
         return new MarketResponse(teamsPlayingToday);
     }
@@ -54,6 +61,7 @@ public class MatchupService {
 
         LocalDateTime startTime = teamService.getStartTimeByTeamId(team.getTeamId());
 
+        matchup.setStartTimeDateTime(startTime);
         matchup.setStartTime(startTime.format(DateTimeFormatter.ofPattern("h:mm a")));
         return matchup;
     }
