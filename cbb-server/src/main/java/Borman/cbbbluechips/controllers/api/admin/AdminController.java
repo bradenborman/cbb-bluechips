@@ -72,7 +72,6 @@ public class AdminController extends AuthenticatedController {
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping("/update-price")
     public ResponseEntity<Void> updateMarketPrice(@RequestBody UpdateMarketPriceRequest updateMarketPriceRequest) {
         adminService.updateMarketPrice(updateMarketPriceRequest);

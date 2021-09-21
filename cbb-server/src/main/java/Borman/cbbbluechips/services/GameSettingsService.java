@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 
 @Service
@@ -36,6 +38,13 @@ public class GameSettingsService {
 
     public String getCurrentRound() {
         return settingsDao.getCurrentRound();
+    }
+
+    public String selectLastPriceChange() {
+        String lastUpdateTime = settingsDao.selectLastPriceChange();
+        //parse to date so there is some integrity
+        LocalDateTime.parse(lastUpdateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd h:m a"));
+        return lastUpdateTime;
     }
 
     public void updateRound(String round) {

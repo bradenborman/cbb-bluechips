@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,24 +17,23 @@ public class LeaderboardService {
 
     Logger logger = LoggerFactory.getLogger(LeaderboardService.class);
 
+    GameSettingsService gameSettingsService;
     OwnsService ownsService;
     UserGroupService userGroupService;
     UserService userService;
 
-    public LeaderboardService(OwnsService ownsService, UserGroupService userGroupService,
-                              UserService userService) {
+    public LeaderboardService(GameSettingsService gameSettingsService, OwnsService ownsService, UserGroupService userGroupService, UserService userService) {
+        this.gameSettingsService = gameSettingsService;
         this.ownsService = ownsService;
         this.userGroupService = userGroupService;
         this.userService = userService;
     }
 
-    //TODO replace with call to DB to get the last updated time. Make new table/col
     public List<LeaderBoardUser> getLeaders() {
         LocalDateTime startTimeOfMethod = LocalDateTime.now();
-        LocalDateTime lastPriceChange = LocalDateTime.of(2021, 6, 5, 10, 15, 10);
-        String lastPriceChangeStr = lastPriceChange.format(DateTimeFormatter.ofPattern("yyyy-MM-dd h:m a"));
-        logger.info("Getting leaderboard for last price change of: {}", lastPriceChangeStr);
-        List<LeaderBoardUser> results = ownsService.retrieveLeaderboard(lastPriceChangeStr);
+        String lastPriceChange = gameSettingsService.selectLastPriceChange();
+        logger.info("Getting leaderboard for last price change of: {}", lastPriceChange);
+        List<LeaderBoardUser> results = ownsService.retrieveLeaderboard(lastPriceChange);
         logger.info("Done getting leaderboard in: {} milli seconds", Duration.between(startTimeOfMethod, LocalDateTime.now()).toMillis());
         return results;
     }

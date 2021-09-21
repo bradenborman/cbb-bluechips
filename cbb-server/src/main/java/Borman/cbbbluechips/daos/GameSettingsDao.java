@@ -24,6 +24,11 @@ public class GameSettingsDao {
         return jdbcTemplate.queryForObject(GameSettingsSQL.getCurrentRound, String.class);
     }
 
+    public String selectLastPriceChange() {
+        return jdbcTemplate.queryForObject(GameSettingsSQL.SELECT_LAST_PRICE_CHANGE, String.class);
+    }
+
+
     public void updateCurrentRound(String round) {
         String sql = "UPDATE game_info SET Current_Round = " + round + " WHERE Year = '2019';";
         jdbcTemplate.update(sql);

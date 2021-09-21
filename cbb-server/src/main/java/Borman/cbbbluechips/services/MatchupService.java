@@ -36,7 +36,6 @@ public class MatchupService {
                 .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)
                 .sorted(Matchup::compareTo)
-                .peek(x -> logger.info("{}", x.toString()))
                 .collect(Collectors.toList());
 
 

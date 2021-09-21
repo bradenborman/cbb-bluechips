@@ -15,6 +15,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -73,7 +75,7 @@ public class AdminDao {
     public void updateMarketPriceByTeamAndRound(MarketValue newMarketValue) {
         try {
             SqlParameterSource params = new BeanPropertySqlParameterSource(newMarketValue);
-            namedParameterJdbcTemplate.update(AdminSQL.updateMarketPriceByTeam, params);
+            namedParameterJdbcTemplate.update(AdminSQL.UPDATE_TEAMS_SET_CURRENT_MARKET_PRICE, params);
         } catch (Exception e) {
             System.out.println("Failed to update Market Price By Team And Round" + e);
         }
@@ -91,7 +93,7 @@ public class AdminDao {
     public void archivePriceUpdateRenew(MarketValue newMarketValue) {
         try {
             SqlParameterSource params = new BeanPropertySqlParameterSource(newMarketValue);
-            namedParameterJdbcTemplate.update(AdminSQL.archivePriceUpdateRenew, params);
+            namedParameterJdbcTemplate.update(AdminSQL.ARCHIVE_PRICE_UPDATE_RENEW, params);
         } catch (Exception e) {
             System.out.println("Failed to archive Price Update" + e);
         }
@@ -124,4 +126,16 @@ public class AdminDao {
         }
     }
 
+    public void updateLastPriceUpdate() {
+        LocalDateTime lastUpdateTime = LocalDateTime.now();
+        try {
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("lastUpdateTime", lastUpdateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd h:m a")));
+
+            String sql = "UPDATE game_info SET Last_Price_Change = :lastUpdateTime";
+            namedParameterJdbcTemplate.update(sql, params);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
 }

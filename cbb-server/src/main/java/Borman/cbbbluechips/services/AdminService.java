@@ -117,6 +117,7 @@ public class AdminService {
         else
             adminDao.archivePriceUpdateCreate(newMarketValue);
 
+        adminDao.updateLastPriceUpdate();
 
         //TODO enable again
 //        twiloService.sendPriceChangeAlert(newMarketValue);

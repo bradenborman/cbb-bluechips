@@ -15,9 +15,9 @@ public class AdminSQL {
 
     public static final String updateLockedAndEliminated = "UPDATE teams SET Is_Out = :out, Is_Locked = :locked WHERE Name = :teamName";
 
-    public static final String updateMarketPriceByTeam = "UPDATE teams SET Current_Market_Price = :price WHERE Name = :teamName";
+    public static final String UPDATE_TEAMS_SET_CURRENT_MARKET_PRICE = "UPDATE teams SET Current_Market_Price = :price WHERE Name = :teamName";
 
-    public static final String archivePriceUpdateRenew = "UPDATE price_history SET Price = :price WHERE Team_ID = :teamId AND Round_ID = :roundId";
+    public static final String ARCHIVE_PRICE_UPDATE_RENEW = "UPDATE price_history SET Price = :price WHERE Team_ID = :teamId AND Round_ID = :roundId";
 
     public static final String archivePriceUpdateCreate = "INSERT INTO price_history (Team_ID, Round_ID, Price) VALUES (:teamId, :roundId, :price)";
 
