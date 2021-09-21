@@ -20,6 +20,8 @@ public class Team {
     private double currentMarketPrice;
     private String sharesOutstanding;
 
+    private boolean isNextGameHome;
+
     @Deprecated
     private String priceHistoryString;
     private boolean doesUserOwn;
@@ -122,6 +124,14 @@ public class Team {
 
     public void setDoesUserOwn(boolean doesUserOwn) {
         this.doesUserOwn = doesUserOwn;
+    }
+
+    public boolean isNextGameHome() {
+        return isNextGameHome;
+    }
+
+    public void setNextGameHome(boolean nextGameHome) {
+        isNextGameHome = nextGameHome;
     }
 
     public String getPriceHistoryString() {

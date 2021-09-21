@@ -91,11 +91,20 @@ public class TeamService {
         //Selects with shares outstanding
         logger.info("Querying for teams playing today..");
         List<Team> list = new ArrayList<>();
-        list.addAll(teamDao.getTeamsPlayingTodayHomeTeam());
-        list.addAll(teamDao.getTeamsPlayingTodayAwayTeam());
+        List<Team> homeTeams = teamDao.getTeamsPlayingTodayHomeTeam();
+        List<Team> awayTeams = teamDao.getTeamsPlayingTodayAwayTeam();
+
+        logger.info("Games today: {}", homeTeams.size());
+
+        if (homeTeams.size() != awayTeams.size())
+            logger.error("Numbers do not match for teams playing today. Not same number as home({}) and away({}) teams", homeTeams.size(), awayTeams.size());
+
+        list.addAll(homeTeams);
+        list.addAll(awayTeams);
         return list;
     }
 
+    @Deprecated //todo remove cache config
     @Cacheable(value = "homeTeamsPlayingToday")
     public List<Team> homeTeamsPlayingToday(LocalDate now) {
         //Selects with shares outstanding

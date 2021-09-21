@@ -11,7 +11,7 @@ public class TeamSQL {
     public static final String getTeamBySportsDataId = "SELECT * FROM teams WHERE (Sports_Data_Team_ID = :sportsDataId)";
 
     public static final String getTeamByIdWithSharesOutstanding = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
-            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name " +
+            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name, Next_Game_Home_Game " +
             "FROM teams " +
             "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
             "WHERE teams.Team_ID = :teamId;";
@@ -23,7 +23,7 @@ public class TeamSQL {
             "Where teams.Team_ID = :teamId";
 
     public static final String getAllTeamsWithSharesOutstandingDetail = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
-            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name " +
+            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name, Next_Game_Home_Game " +
             "FROM teams " +
             "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
             "WHERE seed > 0 group by teams.Team_ID " +
@@ -46,12 +46,23 @@ public class TeamSQL {
 //    public static final String SELECT_TEAMS_PLAYING_NEXT_SET = "SELECT * FROM teams WHERE Next_Team_Playing is not null";
 
     public static final String SELECT_TEAMS_PLAYING_HOME_TEAM = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
-            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name " +
+            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name, Next_Game_Home_Game " +
             "FROM teams " +
             "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
-            "WHERE Next_Team_Playing is not null group by teams.Team_ID " +
+            "WHERE Next_Team_Playing is not null " +
             "AND seed > 0 " +
             "AND Next_Game_Home_Game = true " +
+            "group by teams.Team_ID " +
+            "ORDER by Next_Team_Playing is not null desc, is_out ASC, seed asc";
+
+    public static final String SELECT_TEAMS_PLAYING_AWAY_TEAM = "SELECT teams.Team_ID, name, seed, Is_Locked, point_spread, is_out, Logo_URL, " +
+            "Current_Market_Price, Next_Team_Playing, Point_Spread, Sum(Amount_Owned) as Amount_Owned, teams.Name, Next_Game_Home_Game " +
+            "FROM teams " +
+            "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
+            "WHERE Next_Team_Playing is not null " +
+            "AND seed > 0 " +
+            "AND Next_Game_Home_Game = false " +
+            "group by teams.Team_ID " +
             "ORDER by Next_Team_Playing is not null desc, is_out ASC, seed asc";
 
 }

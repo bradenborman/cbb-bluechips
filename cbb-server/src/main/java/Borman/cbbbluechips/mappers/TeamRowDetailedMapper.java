@@ -24,6 +24,8 @@ public class TeamRowDetailedMapper implements RowMapper<Team> {
         team.setNextTeamPlaying(rs.getString("Next_Team_Playing"));
         team.setPointSpread(rs.getString("Point_Spread"));
 
+        team.setNextGameHome(rs.getBoolean("Next_Game_Home_Game"));
+
         String sharesOutstanding = rs.getString("Amount_Owned");
         team.setSharesOutstanding(sharesOutstanding != null ? sharesOutstanding : "0");
 

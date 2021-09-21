@@ -8,6 +8,10 @@ public class MarketResponse {
 
     List<Matchup> matchups;
 
+    public MarketResponse(List<Matchup> matchups) {
+        this.matchups = matchups;
+    }
+
     public List<Matchup> getMatchups() {
         return matchups;
     }

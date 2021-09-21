@@ -27,38 +27,30 @@ public class MatchupService {
     }
 
     public MarketResponse todaysMarket() {
-        MarketResponse response = new MarketResponse();
-
-        List<Matchup> teamsPlayingToday = teamService.homeTeamsPlayingToday(LocalDate.now())
+        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(LocalDate.now())
                 .stream()
+                .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)
                 .collect(Collectors.toList());
 
-        response.setMatchups(teamsPlayingToday);
-
-
-        return response;
+        return new MarketResponse(teamsPlayingToday);
     }
 
 
     private Matchup createMatchup(Team team) {
         Matchup matchup = new Matchup();
 
-
+        //Set price history for homeTeam
         List<String> priceHistoryTeam1 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(team.getTeamId()));
-
         team.setPriceHistory(priceHistoryTeam1);
         matchup.setTeam1(team);
 
-
         Team teamPlaying = teamService.getTeamByIdWithSharesOutstanding((team.getNextTeamPlaying()));
-
+        //Set price history for AwayTeam
         List<String> priceHistoryTeam2 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(teamPlaying.getTeamId()));
-
-
         teamPlaying.setPriceHistory(priceHistoryTeam2);
-
         matchup.setTeam2(teamPlaying);
+
         matchup.setStartTime(LocalDateTime.now()
                 .plusHours(0)
                 .plusMinutes(16)
