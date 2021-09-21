@@ -28,6 +28,7 @@ public class ViewControllerAdmin {
     }
 
 
+    @Deprecated
     @RequestMapping("/update/teams")
     public String updateTeams(@RequestParam(required = false) String teamId, Model model) {
         model.addAttribute("teams", teamService.getAllTeams(true));

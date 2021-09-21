@@ -89,7 +89,7 @@ public class TeamService {
     }
 
     @Cacheable(value = "teamsPlayingToday")
-    public List<Team> teamsPlayingToday(LocalDate now) {
+    public List<Team> teamsPlayingToday(String now) {
         //Selects with shares outstanding
         logger.debug("Querying for teams playing today..");
         List<Team> list = new ArrayList<>();
