@@ -18,19 +18,18 @@ public class MatchupService {
 
     Logger logger = LoggerFactory.getLogger(MatchupService.class);
 
-    private final GameSettingsService gameSettingsService;
     private final TeamService teamService;
     private final PriceHistoryService priceHistoryService;
 
-    public MatchupService(GameSettingsService gameSettingsService, TeamService teamService, PriceHistoryService priceHistoryService) {
-        this.gameSettingsService = gameSettingsService;
+    public MatchupService(TeamService teamService, PriceHistoryService priceHistoryService) {
         this.teamService = teamService;
         this.priceHistoryService = priceHistoryService;
     }
 
     public MarketResponse todaysMarket() {
 
-        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(gameSettingsService.selectLastPriceChange())
+        //Not caching at the moment.. not sure I want to for this
+        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(LocalDateTime.now().toString())
                 .stream()
                 .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)
