@@ -31,7 +31,7 @@ public class TeamSQL {
 
     public static final String getTeamByName = "SELECT * FROM teams WHERE Name = :teamName;";
 
-    public static final String updateNextTeamPlaying = "UPDATE teams SET Next_Team_Playing = :teamPlayingId WHERE (Sports_Data_Team_ID = :teamToUpdateId)";
+    public static final String updateNextTeamPlaying = "UPDATE teams SET Next_Team_Playing = :teamPlayingId, Next_Game_Home_Game = :homeTeam WHERE (Sports_Data_Team_ID = :teamToUpdateId)";
 
     public static final String getTeamPlayingNext = "SELECT Next_Team_Playing FROM teams where Team_ID = :teamId;";
 
@@ -51,7 +51,7 @@ public class TeamSQL {
             "left JOIN owns ON teams.Team_ID = owns.Team_ID " +
             "WHERE Next_Team_Playing is not null group by teams.Team_ID " +
             "AND seed > 0 " +
+            "AND Next_Game_Home_Game = true " +
             "ORDER by Next_Team_Playing is not null desc, is_out ASC, seed asc";
-
 
 }

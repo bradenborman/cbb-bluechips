@@ -40,20 +40,14 @@ public class SportsDataApiService {
         return Arrays.asList(Objects.requireNonNull(response.getBody()));
     }
 
-    void updateTeamsPlayingToday() {
+    public void updateTeamsPlayingToday() {
         logger.info("Re-setting all teams playing.");
-        logger.warn("Only updating home team because in the matchups, it would create duplicates.");
         teamDao.resetNextTeamPlayingForAll();
         List<SportsDataGamesToday> updatedTeamInfo = callGamesByDay();
-
-        //Update only the home teams to avoid duplicate matchups
         updatedTeamInfo.forEach(game -> {
             logger.info("UPDATE GAME: teamID: {} plays {}", game.getHomeTeam(), game.getAwayTeam());
-            updateTeamNextGame(
-                    game.getHomeTeamId(),
-                    game.getAwayTeamId()
-            );
-//            updateTeamNextGame(game.getHomeTeam(), game.getAwayTeamId());
+            updateTeamNextGame(game.getHomeTeamId(), game.getAwayTeamId(), true);
+            updateTeamNextGame(game.getAwayTeamId(), game.getHomeTeamId(), false);
         });
     }
 
@@ -71,10 +65,10 @@ public class SportsDataApiService {
         return Arrays.asList(Objects.requireNonNull(response.getBody()));
     }
 
-    private void updateTeamNextGame( String teamToUpdateId, String nextTeamPlayingId) {
+    private void updateTeamNextGame( String teamToUpdateSportsDataId, String nextTeamPlayingId, boolean isHomeTeam) {
         String teamIdPlaying = teamDao.getTeamBySportsDataId(nextTeamPlayingId).getTeamId();
-        logger.info("My team id: {}", teamIdPlaying);
-        teamDao.updateNextTeamPlayingByTeamID(teamToUpdateId, teamIdPlaying);
+        logger.info("My CBB team id: {}", teamIdPlaying);
+        teamDao.updateNextTeamPlayingByTeamID(teamToUpdateSportsDataId, teamIdPlaying, isHomeTeam);
     }
 
 

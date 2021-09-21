@@ -5,6 +5,7 @@ twilio:
 sport-data-api:
   apiKey: ${SportsDataApiKey}
   url: https://api.sportsdata.io/v3/cbb/scores/json/teams?key=${sport-data-api.apiKey}
+  update: daily # [mins, daily]
 
 spring:
   thymeleaf:

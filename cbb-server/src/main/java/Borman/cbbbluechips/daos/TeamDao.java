@@ -80,11 +80,12 @@ public class TeamDao {
     }
 
 
-    public void updateNextTeamPlayingByTeamID(String teamToUpdateId, String teamPlayingId) {
+    public void updateNextTeamPlayingByTeamID(String teamToUpdateSportsDataId, String teamPlayingId, boolean isHomeTeam) {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource()
-                    .addValue("teamToUpdateId", teamToUpdateId)
-                    .addValue("teamPlayingId", teamPlayingId); //My TEAM id not sports data
+                    .addValue("teamToUpdateId", teamToUpdateSportsDataId)
+                    .addValue("teamPlayingId", teamPlayingId) //My TEAM id not sports data
+                    .addValue("homeTeam", isHomeTeam ? "1" : "0");
 
             namedParameterJdbcTemplate.update(TeamSQL.updateNextTeamPlaying, params);
         } catch (Exception e) {
