@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TeamDao {
@@ -147,4 +148,9 @@ public class TeamDao {
         return namedParameterJdbcTemplate.query(TeamSQL.SELECT_TEAMS_PLAYING_AWAY_TEAM, new TeamRowDetailedMapper());
     }
 
+    public Optional<String> getStartTimeByTeamId(String teamId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("teamId", teamId);
+        return Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(TeamSQL.SELECT_START_TIME_BY_ID, params, String.class));
+    }
 }

@@ -41,7 +41,8 @@ public class MatchupService {
         Matchup matchup = new Matchup();
 
         //Set price history for homeTeam
-        List<String> priceHistoryTeam1 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(team.getTeamId()));
+        List<String>
+                priceHistoryTeam1 = PriceHistoryUtility.apply(priceHistoryService.priceHistoryByTeamId(team.getTeamId()));
         team.setPriceHistory(priceHistoryTeam1);
         matchup.setTeam1(team);
 
@@ -51,10 +52,9 @@ public class MatchupService {
         teamPlaying.setPriceHistory(priceHistoryTeam2);
         matchup.setTeam2(teamPlaying);
 
-        matchup.setStartTime(LocalDateTime.now()
-                .plusHours(0)
-                .plusMinutes(16)
-                .format(DateTimeFormatter.ofPattern("h:mm a")));
+        LocalDateTime startTime = teamService.getStartTimeByTeamId(team.getTeamId());
+
+        matchup.setStartTime(startTime.format(DateTimeFormatter.ofPattern("h:mm a")));
         return matchup;
     }
 }

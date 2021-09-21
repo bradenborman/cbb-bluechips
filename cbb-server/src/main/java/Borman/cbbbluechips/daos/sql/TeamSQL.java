@@ -65,4 +65,5 @@ public class TeamSQL {
             "group by teams.Team_ID " +
             "ORDER by Next_Team_Playing is not null desc, is_out ASC, seed asc";
 
+    public static final String SELECT_START_TIME_BY_ID = "SELECT Next_Game_Start_Time FROM teams WHERE Team_ID = :teamId";
 }

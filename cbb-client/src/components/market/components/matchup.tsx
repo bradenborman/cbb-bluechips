@@ -21,6 +21,8 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
     props.matchup.startTime
   );
 
+  console.log(props.matchup.startTime);
+
   const startTimeParsed = moment(props.matchup.startTime, ["h:mm a"]);
   const loadedInAfterStartTime = moment().isAfter(startTimeParsed);
 

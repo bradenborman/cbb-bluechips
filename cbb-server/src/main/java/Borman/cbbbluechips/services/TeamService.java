@@ -11,6 +11,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,4 +114,16 @@ public class TeamService {
         return teamDao.getTeamsPlayingTodayHomeTeam();
     }
 
+    public LocalDateTime getStartTimeByTeamId(String teamId) {
+        Optional<String> startTimeStr = teamDao.getStartTimeByTeamId(teamId);
+        logger.info("Game starting at: {}", startTimeStr);
+
+        return startTimeStr
+                .map(s -> {
+                    LocalDate localDate = LocalDate.now();
+                    String date = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    return LocalDateTime.parse(date + " " + s, DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a"));
+                })
+                .orElseGet(LocalDateTime::now);
+    }
 }
