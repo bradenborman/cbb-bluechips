@@ -1,6 +1,6 @@
 package Borman.cbbbluechips.daos;
 
-import Borman.cbbbluechips.config.GameRules;
+import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.sql.GameSettingsSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

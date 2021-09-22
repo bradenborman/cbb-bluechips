@@ -4,6 +4,7 @@ import Borman.cbbbluechips.controllers.AuthenticatedController;
 import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
 import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
+import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.models.responses.GameSettingsResponse;
 import Borman.cbbbluechips.services.*;
 import org.springframework.http.ResponseEntity;
@@ -56,9 +57,7 @@ public class AdminController extends AuthenticatedController {
 
     @GetMapping("/teams-playing-today")
     public ResponseEntity<List<Team>> teamsPlayingToday() {
-        return ResponseEntity.ok(teamService.teamsPlayingToday(
-                settingsService.selectLastPriceChange()) //caches one date
-        );
+        return ResponseEntity.ok(teamService.teamsPlayingToday());
     }
 
     @PostMapping("/update-seed")
@@ -79,6 +78,12 @@ public class AdminController extends AuthenticatedController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/update-point-spread")
+    public ResponseEntity<Void> updatePointSpread(@RequestBody UpdatePointSpreadRequest updateMarketPriceRequest) {
+        adminService.updatePointSpread(updateMarketPriceRequest);
+        return ResponseEntity.ok().build();
+    }
+
 
 //
 //    @PostMapping("/update-locked")
@@ -88,11 +93,7 @@ public class AdminController extends AuthenticatedController {
 //        return "redirect:/admin/update/teams";
 //    }
 //
-//    @PostMapping("/update-pointspread")
-//    public String updatePointSpread(@RequestParam(value = "teamName") String[] teamName, @RequestParam(value = "nextPointSpread") String[] nextPointSpread) {
-//        adminService.processUpdatePointSpreadRequest(Arrays.asList(teamName), Arrays.asList(nextPointSpread));
-//        return "redirect:/admin";
-//    }
+
 //
 //    @PostMapping("/delete-group")
 //    public ResponseEntity<String> deleteGroup(@RequestBody DeleteGroupRequest deleteGroupRequest) {

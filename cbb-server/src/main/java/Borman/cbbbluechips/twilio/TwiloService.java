@@ -1,6 +1,6 @@
 package Borman.cbbbluechips.twilio;
 
-import Borman.cbbbluechips.config.TwilloConfig;
+import Borman.cbbbluechips.config.properties.TwilloConfig;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SMS_Alert;
 import Borman.cbbbluechips.services.OwnsService;

@@ -1,6 +1,6 @@
 package Borman.cbbbluechips.services;
 
-import Borman.cbbbluechips.config.SportsDataApiConfig;
+import Borman.cbbbluechips.config.properties.SportsDataApiConfig;
 import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataGamesToday;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;

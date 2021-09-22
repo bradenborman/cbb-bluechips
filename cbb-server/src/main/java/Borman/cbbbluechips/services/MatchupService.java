@@ -28,8 +28,7 @@ public class MatchupService {
 
     public MarketResponse todaysMarket() {
 
-        //Not caching at the moment.. not sure I want to for this
-        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday(LocalDateTime.now().toString())
+        List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday()
                 .stream()
                 .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)

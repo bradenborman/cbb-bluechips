@@ -1,16 +1,15 @@
 package Borman.cbbbluechips.services;
 
 import Borman.cbbbluechips.builders.MarketValueBuilder;
-import Borman.cbbbluechips.builders.UpdatePointSpreadRequestBuilder;
-import Borman.cbbbluechips.config.SportsDataApiConfig;
+import Borman.cbbbluechips.config.properties.SportsDataApiConfig;
 import Borman.cbbbluechips.daos.AdminDao;
 import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;
 import Borman.cbbbluechips.models.Team;
-import Borman.cbbbluechips.models.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
 import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
+import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.twilio.TwiloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiPredicate;
 
 @Service
 public class AdminService {
@@ -124,30 +121,10 @@ public class AdminService {
 
     }
 
-    public void processUpdatePointSpreadRequest(List<String> teamNames, List<String> pointSpreads) {
-        if (teamNames.size() != pointSpreads.size())
-            System.out.println("Error. PointSpreadRequest Not same size");
-
-        List<UpdatePointSpreadRequest> updates = new ArrayList<>();
-        for (int x = 0; x < teamNames.size(); x++)
-            updates.add(UpdatePointSpreadRequestBuilder.anUpdatePointSpreadRequest().withTeamName(teamNames.get(x)).withNextPointSpread(attemptToGetPointSpread(pointSpreads.get(x))).build());
-
-        validateChangeOfPointSpread(updates);
-        updates.forEach(team -> adminDao.updatePointSpreadRequest(team));
+    public void updatePointSpread(UpdatePointSpreadRequest request) {
+        logger.info("Point spread updated. Team: {}, new price: {}", request.getTeamId(), request.getNewPointSpread());
+        adminDao.updatePointSpreadRequest(request);
     }
-
-
-    public void validateChangeOfPointSpread(List<UpdatePointSpreadRequest> updates) {
-
-        BiPredicate<UpdatePointSpreadRequest, UpdatePointSpreadRequest> hasOpposite = (request, bulk) -> (swapPointSpreadToOppo(request.getNextPointSpread()).equals(String.valueOf(bulk.getNextPointSpread())));
-
-//        updates.forEach(updateRequest -> {
-//            if(updates.stream().noneMatch(bulk -> hasOpposite.test(updateRequest, bulk)))
-//                throw new RuntimeException("Point Spreads do not match up");
-//        });
-
-    }
-
 
     private String swapPointSpreadToOppo(double pointSpread) {
         return String.valueOf((pointSpread * -1));

@@ -4,8 +4,8 @@ import Borman.cbbbluechips.daos.sql.AdminSQL;
 import Borman.cbbbluechips.mappers.PriceHistoryRowMapper;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;
-import Borman.cbbbluechips.models.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -113,13 +113,13 @@ public class AdminDao {
         }
     }
 
-    public void updatePointSpreadRequest(UpdatePointSpreadRequest team) {
+    public void updatePointSpreadRequest(UpdatePointSpreadRequest request) {
         try {
             MapSqlParameterSource params = new MapSqlParameterSource()
-                    .addValue("pointSpread", team.getNextPointSpread())
-                    .addValue("teamName", team.getTeamName());
+                    .addValue("pointSpread", request.getNewPointSpread())
+                    .addValue("teamId", request.getTeamId());
 
-            String sql = "UPDATE teams SET Point_Spread = :pointSpread WHERE Name = :teamName";
+            String sql = "UPDATE teams SET Point_Spread = :pointSpread WHERE Team_ID = :teamId";
             namedParameterJdbcTemplate.update(sql, params);
         } catch (Exception e) {
             System.out.println(e.toString());

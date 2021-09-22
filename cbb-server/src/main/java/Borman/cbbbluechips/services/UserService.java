@@ -1,5 +1,6 @@
 package Borman.cbbbluechips.services;
 
+import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.UserDao;
 import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.User;
@@ -8,7 +9,6 @@ import Borman.cbbbluechips.models.responses.PhoneNumberDetails;
 import Borman.cbbbluechips.utilities.UserNameUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +18,17 @@ import java.util.List;
 public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
-    UserDao userDao;
-    EmailService emailService;
+
+    private final UserDao userDao;
+    private final EmailService emailService;
     private final int STARTING_CASH;
     private final boolean SIGNUP_ALLOWED;
 
-    public UserService(UserDao userDao, @Qualifier("startingCash") final int STARTING_CASH, EmailService emailService,
-                       @Qualifier("signUpAllowed") boolean SIGNUP_ALLOWED) {
+    public UserService(UserDao userDao, GameRules gameRules, EmailService emailService) {
         this.userDao = userDao;
         this.emailService = emailService;
-        this.STARTING_CASH = STARTING_CASH;
-        this.SIGNUP_ALLOWED = SIGNUP_ALLOWED;
+        this.STARTING_CASH = gameRules.getStartingCash();
+        this.SIGNUP_ALLOWED = gameRules.isSignUpAllowed();
     }
 
     public List<User> getAllUsers() {
@@ -40,7 +40,7 @@ public class UserService {
         if (SIGNUP_ALLOWED) {
 
             if (isUserAlreadyPresent(request.getEmail())) {
-                logger.info(String.format("%s already in database", request.getEmail()));
+                logger.info("{} already in database", request.getEmail());
             } else {
 
                 User user = new User(
@@ -106,7 +106,7 @@ public class UserService {
     }
 
     public boolean updatePhoneNumber(String phoneNumber, String UserId) {
-        logger.info(String.format("Request to change Phone Number: %s by user: %s", phoneNumber, UserId));
+        logger.info("Request to change Phone Number: {} by user: {}", phoneNumber, UserId);
         userDao.updatePhoneNumber(phoneNumber, UserId);
         if ("".equals(phoneNumber))
             userDao.unSubscribeUserToTextAlerts(UserId);

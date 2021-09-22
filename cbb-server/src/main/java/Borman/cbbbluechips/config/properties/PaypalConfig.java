@@ -1,4 +1,4 @@
-package Borman.cbbbluechips.config;
+package Borman.cbbbluechips.config.properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +31,7 @@ public class PaypalConfig {
     }
 
     public String getPayPalUrl() {
-        return  "https://www.paypal.com/sdk/js?client-id=${client_id}&disable-funding=credit,card"
-                .replace("${client_id}", clientId);
+        return  "https://www.paypal.com/sdk/js?client-id=${client_id}&disable-funding=credit,card".replace("${client_id}", clientId);
     }
 
 }

@@ -1,13 +1,12 @@
 package Borman.cbbbluechips.services;
 
-import Borman.cbbbluechips.config.GameRules;
+import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -88,8 +87,7 @@ public class TeamService {
         return !teamDao.isTeamLocked(teamId);
     }
 
-    @Cacheable(value = "teamsPlayingToday")
-    public List<Team> teamsPlayingToday(String now) {
+    public List<Team> teamsPlayingToday() {
         //Selects with shares outstanding
         logger.debug("Querying for teams playing today..");
         List<Team> list = new ArrayList<>();
@@ -99,7 +97,7 @@ public class TeamService {
         logger.debug("Games today: {}", homeTeams.size());
 
         if (homeTeams.size() != awayTeams.size())
-            logger.error("Numbers do not match for teams playing today. Not same number as home({}) and away({}) teams", homeTeams.size(), awayTeams.size());
+            logger.warn("Numbers do not match for teams playing today. Not same number as home({}) and away({}) teams", homeTeams.size(), awayTeams.size());
 
         list.addAll(homeTeams);
         list.addAll(awayTeams);

@@ -1,11 +1,10 @@
 package Borman.cbbbluechips.services;
 
+import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.GameSettingsDao;
-import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.models.responses.GameSettingsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +15,15 @@ import java.util.stream.Stream;
 @Service
 public class GameSettingsService {
 
-    private Logger logger = LoggerFactory.getLogger(GameSettingsService.class);
+    private final Logger logger = LoggerFactory.getLogger(GameSettingsService.class);
 
-    private GameSettingsDao settingsDao;
-    private TeamDao teamDao;
-    private int startingCash;
+    private final GameSettingsDao settingsDao;
+    private final int STARTING_CASH;
 
-    public GameSettingsService(GameSettingsDao settingsDao, TeamDao teamDao, @Qualifier("startingCash") int startingCash) {
+    public GameSettingsService(GameSettingsDao settingsDao, GameRules gameRules) {
         this.settingsDao = settingsDao;
-        this.teamDao = teamDao;
-        this.startingCash = startingCash;
+        this.STARTING_CASH = gameRules.getStartingCash();
     }
-
 
     public GameSettingsResponse gameSettings() {
         GameSettingsResponse response = new GameSettingsResponse();
@@ -60,7 +56,7 @@ public class GameSettingsService {
         settingsDao.deleteAllPriceHistoryFromGame();
         settingsDao.resetAllTeamsBackToStartingPrice();
         settingsDao.deleteAllFromOwnsTable();
-        settingsDao.updateAllUsersCashBackToStartingCash(startingCash);
+        settingsDao.updateAllUsersCashBackToStartingCash(STARTING_CASH);
         settingsDao.resetLockedAndIsOutStatus();
         updateRound("64");
         logger.info("~~ REQUEST TO RESET GAME COMPLETED ~~");
