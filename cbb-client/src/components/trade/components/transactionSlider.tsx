@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { exception } from "console";
+
+export enum TransactionType {
+  BUY = "Buy",
+  SELL = "Sell"
+}
 
 export interface ITransactionSliderProps {
-  sell?: boolean;
-  buy?: boolean;
+  transactionType: TransactionType;
   min?: number;
   max: number;
 }
 export const TransactionSlider: React.FC<ITransactionSliderProps> = (
   props: ITransactionSliderProps
 ) => {
-  const btnTxt = props.sell ? "Sell" : props.buy ? "Buy" : "Error";
+  const btnTxt = props.transactionType;
 
   const [sliderValue, setSliderValue] = useState<number>(0);
 

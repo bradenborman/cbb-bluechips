@@ -1,10 +1,10 @@
 package Borman.cbbbluechips.config.security;
 
+import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.UserDao;
 import Borman.cbbbluechips.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,14 +15,14 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    private UserDao userDao;
-    private List<String> admins;
+    private final UserDao userDao;
+    private final List<String> admins;
 
-    public UserDetailsServiceImpl(UserDao userDao, @Qualifier("admins") List<String> admins) {
+    public UserDetailsServiceImpl(UserDao userDao, GameRules gameRules) {
         this.userDao = userDao;
-        this.admins = admins;
+        this.admins = gameRules.getAdmins();
     }
 
     @Override

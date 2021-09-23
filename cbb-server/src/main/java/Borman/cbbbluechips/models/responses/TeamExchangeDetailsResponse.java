@@ -136,4 +136,24 @@ public class TeamExchangeDetailsResponse {
     public void setSharesOutstanding(String sharesOutstanding) {
         this.sharesOutstanding = sharesOutstanding;
     }
+
+    @Override
+    public String toString() {
+        return "TeamExchangeDetailsResponse{" +
+                "userId='" + userId + '\'' +
+                ", purchasingPower=" + purchasingPower +
+                ", teamId='" + teamId + '\'' +
+                ", teamName='" + teamName + '\'' +
+                ", currentMarketPrice=" + currentMarketPrice +
+                ", sharesOutstanding='" + sharesOutstanding + '\'' +
+                ", seed='" + seed + '\'' +
+                ", teamPlayingNext='" + teamPlayingNext + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", locked=" + locked +
+                ", pointSpread='" + pointSpread + '\'' +
+                ", amountSharesOwned=" + amountSharesOwned +
+                ", maximumCanPurchase=" + maximumCanPurchase +
+                ", topHolders=" + topHolders +
+                '}';
+    }
 }

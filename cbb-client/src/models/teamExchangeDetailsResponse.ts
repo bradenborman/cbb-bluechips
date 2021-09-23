@@ -10,4 +10,7 @@ export interface ITeamExchangeDetailsResponse {
   startTime: string;
   locked: boolean;
   pointSpread: number;
+  topHolders: string[];
+  maximumCanPurchase: number;
+  amountSharesOwned: number;
 }
