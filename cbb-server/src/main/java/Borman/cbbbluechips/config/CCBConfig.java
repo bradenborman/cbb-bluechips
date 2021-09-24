@@ -23,7 +23,7 @@ public class CCBConfig {
     @Bean
     public CaffeineCacheManager getCaffeineCacheManager() {
         CaffeineCacheManager manager = new CaffeineCacheManager();
-        manager.setCacheNames(Arrays.asList("recentTransactions", "leaderboard"));
+        manager.setCacheNames(Arrays.asList("recentTransactions", "leaderboard", "ui-auto-lock"));
         manager.setCacheSpecification("maximumSize=500,expireAfterAccess=30m");
         return manager;
     }

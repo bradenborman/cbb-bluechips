@@ -1,4 +1,8 @@
 #trade-wrapper {
+  .showsmall {
+    display: none;
+  }
+
   .loading-wrapper {
     text-align: center;
   }
@@ -162,12 +166,52 @@
 
 @media screen and (max-width: 600px) {
   #trade-wrapper {
+    .showsmall {
+      display: block;
+    }
+
     .row {
       margin-bottom: 0px;
     }
 
     .card {
       margin-bottom: 2vh;
+      .card-header {
+        padding: 0.5em;
+
+        h2 {
+          font-size: 1.2em;
+          margin: 0px;
+        }
+
+        .logo {
+          display: none;
+        }
+      }
+
+      .card-body {
+        padding-top: 0px;
+
+        img.logo-phone {
+          margin: auto;
+          height: 10vh;
+          margin-bottom: 2vh;
+        }
+
+        #trade-info {
+          margin-bottom: 0vh;
+        }
+
+        #top-holders {
+          margin-top: 1.5em;
+          text-align: center;
+          ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
     }
   }
 }

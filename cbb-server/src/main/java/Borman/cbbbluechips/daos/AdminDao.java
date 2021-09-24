@@ -5,6 +5,7 @@ import Borman.cbbbluechips.mappers.PriceHistoryRowMapper;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.LockMatchupRequest;
 import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,5 +138,11 @@ public class AdminDao {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+    }
+
+    public void updateLockedStatus(LockMatchupRequest lockMatchupRequest) {
+        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(lockMatchupRequest);
+        String sql = "UPDATE teams SET Is_Locked = :lock WHERE Team_ID in (:team1Id, :team2Id)";
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

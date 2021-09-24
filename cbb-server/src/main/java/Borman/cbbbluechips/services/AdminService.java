@@ -8,11 +8,13 @@ import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.SportsDataAPI.SportsDataTeam;
 import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.LockMatchupRequest;
 import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
 import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.twilio.TwiloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,6 +140,16 @@ public class AdminService {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    /*
+        Caches so that not every ui that is loaded makes a call to the DB.
+     */
+    @Cacheable(value = "ui-auto-lock", key = "#lockMatchupRequest.team1Id")
+    public boolean updateLockedStatusFromUi(LockMatchupRequest lockMatchupRequest) {
+        logger.info("Updating teams locked status from UI: {}", lockMatchupRequest.toString());
+        adminDao.updateLockedStatus(lockMatchupRequest);
+        return true;
     }
 
 }

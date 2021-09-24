@@ -78,6 +78,14 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
         </Card.Header>
         <Card.Body>
           <Row>
+            <Col>
+              <img
+                className="logo-phone showsmall"
+                src={`/img/teams/${teamExchangeDetailsResponse.teamName}.png`}
+              />
+            </Col>
+          </Row>
+          <Row>
             <div id="trade-info">
               <Col md={12} lg={12}>
                 <h6>
@@ -125,7 +133,7 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
                 }
               />
             </Col>
-            <Col md={12} lg={4}>
+            <Col id="top-holders" md={12} lg={4}>
               <h6>Top Holders:</h6>
               <ul>{topHolders}</ul>
             </Col>

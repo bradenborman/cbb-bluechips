@@ -6,6 +6,7 @@ import classNames from "classnames";
 
 import moment from "moment";
 import { ITeam } from "../../../models/team";
+import axios from "axios";
 
 export interface IMatchupProps {
   matchup: IMatchup;
@@ -16,6 +17,8 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
   const [team1, setTeam1] = useState<ITeam>(props.matchup.team1);
   const [team2, setTeam2] = useState<ITeam>(props.matchup.team2);
 
+  const [makingCallToLock, setMakingCallToLock] = useState<Boolean>(false);
+
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const [countdownUntilLock, setCountdownUntilLock] = useState<string>(
     props.matchup.startTime
@@ -25,6 +28,23 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
 
   const startTimeParsed = moment(props.matchup.startTime, ["h:mm a"]);
   const loadedInAfterStartTime = moment().isAfter(startTimeParsed);
+
+  useEffect(() => {
+    if (makingCallToLock) {
+      axios
+        .post("/api/admin/update-locked", {
+          team1Id: team1.teamId,
+          team2Id: team2.teamId,
+          lock: true
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [makingCallToLock]);
 
   useEffect(() => {
     if (loadedInAfterStartTime) {
@@ -63,6 +83,7 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
           lockedTeam2.locked = true;
           setTeam1(lockedTeam1);
           setTeam2(lockedTeam2);
+          setMakingCallToLock(true);
           setCountdownUntilLock("Game in progess");
         } else if (
           startTimeParsed.diff(rightNow, "minutes") >= 60 * 1.5 &&

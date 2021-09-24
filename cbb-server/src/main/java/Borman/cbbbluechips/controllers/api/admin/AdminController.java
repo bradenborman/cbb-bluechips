@@ -3,6 +3,7 @@ package Borman.cbbbluechips.controllers.api.admin;
 import Borman.cbbbluechips.controllers.AuthenticatedController;
 import Borman.cbbbluechips.models.Team;
 import Borman.cbbbluechips.models.UpdateSeedRequest;
+import Borman.cbbbluechips.models.requests.LockMatchupRequest;
 import Borman.cbbbluechips.models.requests.UpdateMarketPriceRequest;
 import Borman.cbbbluechips.models.requests.UpdatePointSpreadRequest;
 import Borman.cbbbluechips.models.responses.GameSettingsResponse;
@@ -85,14 +86,13 @@ public class AdminController extends AuthenticatedController {
     }
 
 
-//
-//    @PostMapping("/update-locked")
-//    public String updateLocked(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "isEliminated", defaultValue = "false") boolean isEliminated,
-//                               @RequestParam(value = "isLocked", defaultValue = "false") boolean isLocked) {
-//        adminService.updateLockedAndEliminated(teamName, isEliminated, isLocked);
-//        return "redirect:/admin/update/teams";
-//    }
-//
+
+    @PostMapping("/update-locked")
+    public synchronized ResponseEntity<Void> updateLockedFromUi(@RequestBody LockMatchupRequest lockMatchupRequest) {
+        boolean unused = adminService.updateLockedStatusFromUi(lockMatchupRequest);
+        return ResponseEntity.ok().build();
+    }
+
 
 //
 //    @PostMapping("/delete-group")
