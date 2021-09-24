@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { TransactionAction } from "../../../models/TransactionAction";
+import React, { useState } from "react";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 
 export enum TransactionType {
   BUY = "Buy",
   SELL = "Sell"
+}
+
+export interface TransactionAction {
+  currentTransactionCost: string;
+  lastTransactionType: TransactionType | null;
 }
 
 export interface ITransactionSliderProps {

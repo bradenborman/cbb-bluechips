@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Row, Col, Card } from "react-bootstrap";
 import { Page } from "../general/page";
-import { TransactionSlider } from "./components/transactionSlider";
+import {
+  TransactionSlider,
+  TransactionAction
+} from "./components/transactionSlider";
 import { TransactionType } from "./components/transactionSlider";
 
 import axios from "axios";
 import { ITeamExchangeDetailsResponse } from "../../models/teamExchangeDetailsResponse";
 import Loader from "react-loader-spinner";
-import { TransactionAction } from "../../models/TransactionAction";
 
 export interface ITradeProps {}
 export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
