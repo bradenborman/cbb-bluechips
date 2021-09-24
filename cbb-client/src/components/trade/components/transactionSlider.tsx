@@ -42,7 +42,7 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
 
   const handleButtonClick = () => {
     if (
-      giveWarning &&
+      !giveWarning ||
       confirm(`Would you like to ${props.transactionType} shares of this team?`)
     ) {
       // alert(`Should make call to ${props.transactionType} teamid: ${props.teamId} for ${sliderValue} shares`)
