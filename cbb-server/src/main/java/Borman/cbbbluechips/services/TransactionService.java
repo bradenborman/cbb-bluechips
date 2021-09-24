@@ -101,7 +101,7 @@ public class TransactionService {
                 .withVolumeTraded(request.getVolume())
                 .build();
 
-        logger.info("Transaction Created: " + transaction.toString());
+//        logger.info("Transaction Created: " + transaction.toString());
         return transaction;
     }
 

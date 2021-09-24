@@ -9,6 +9,7 @@ import { TransactionType } from "./components/transactionSlider";
 import axios from "axios";
 import { ITeamExchangeDetailsResponse } from "../../models/teamExchangeDetailsResponse";
 import Loader from "react-loader-spinner";
+import { TransactionAction } from "../../models/TransactionAction";
 
 export interface ITradeProps {}
 export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
@@ -18,6 +19,9 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
     teamExchangeDetailsResponse,
     setTeamExchangeDetailsResponse
   ] = useState<ITeamExchangeDetailsResponse>();
+  const [transactionAction, setTransactionAction] = useState<TransactionAction>(
+    { currentTransactionCost: "$0", lastTransactionType: null }
+  );
 
   useEffect(() => {
     axios
@@ -31,7 +35,7 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
       });
   }, []);
 
-  //TODO: show capital available
+  //TODO: show capital available (/)
   //TODO: show team data: name, current price, point spread
   //TODO: show text on screen that says what team would have to win buy to make any money if favored or would have to not lose by if underdog
   //TODO: show countdown timer to when team locks
@@ -79,6 +83,19 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
                   {teamExchangeDetailsResponse.purchasingPower.toLocaleString()}
                 </h6>
               </Col>
+              <Col md={12} lg={12}>
+                <h6>
+                  Current Market Price: $
+                  {teamExchangeDetailsResponse.currentMarketPrice.toLocaleString()}
+                </h6>
+              </Col>
+              <hr />
+              <Col md={12} lg={12}>
+                <h6>
+                  <i className="fa fa-shopping-cart" /> Transaction Cost:{" "}
+                  {transactionAction.currentTransactionCost}
+                </h6>
+              </Col>
             </div>
           </Row>
           <Row>
@@ -86,12 +103,24 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
               <TransactionSlider
                 transactionType={TransactionType.BUY}
                 max={teamExchangeDetailsResponse.maximumCanPurchase}
+                teamId={teamExchangeDetailsResponse.teamId}
+                currentPrice={teamExchangeDetailsResponse.currentMarketPrice}
+                _setTransactionAction={setTransactionAction}
+                zeroValue={
+                  transactionAction.lastTransactionType == TransactionType.SELL
+                }
               />
             </Col>
             <Col md={6} lg={4}>
               <TransactionSlider
                 transactionType={TransactionType.SELL}
                 max={teamExchangeDetailsResponse.amountSharesOwned}
+                teamId={teamExchangeDetailsResponse.teamId}
+                currentPrice={teamExchangeDetailsResponse.currentMarketPrice}
+                _setTransactionAction={setTransactionAction}
+                zeroValue={
+                  transactionAction.lastTransactionType == TransactionType.BUY
+                }
               />
             </Col>
             <Col md={12} lg={4}>

@@ -43,7 +43,7 @@ public class TradeCentralService {
                 .withTopHolders(buildTopHoldersList(topHolders))
                 .build();
 
-        logger.info(response.toString());
+//        logger.info(response.toString());
 
         return response;
     }

@@ -47,7 +47,8 @@ spring:
 game-rules:
   starting-cash: 100000
   starting-price-per-share: 5000
-  admins: bradenborman@hotmail.com, bradenborman00@gmail.com
+  admins[0]: bradenborman@hotmail.com
+  admins[1]: bradenborman00@gmail.com
   sign-up-allowed: ${signUpAllowed}
   display-ads: ${Display_Ads}
   payoutMap:
