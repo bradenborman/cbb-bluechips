@@ -19,8 +19,6 @@ export interface ITransactionSliderProps {
 export const TransactionSlider: React.FC<ITransactionSliderProps> = (
   props: ITransactionSliderProps
 ) => {
-  const [giveWarning, setGiveWarning] = useState<boolean>(false);
-
   const [sliderValue, setSliderValue] = useState<number>(0);
   const [makingRestCall, setMakingRestCall] = useState<boolean>(false);
 
@@ -41,25 +39,24 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
   };
 
   const handleButtonClick = () => {
-    if (
-      !giveWarning ||
-      confirm(`Would you like to ${props.transactionType} shares of this team?`)
-    ) {
-      // alert(`Should make call to ${props.transactionType} teamid: ${props.teamId} for ${sliderValue} shares`)
-      setMakingRestCall(true);
-      axios
-        .post(
-          `/api/trade-action/${props.transactionType}?teamId=${props.teamId}&volume=${sliderValue}`
-        )
-        .then(response => {
-          setMakingRestCall(false);
-          window.location.reload();
-        })
-        .catch(error => {
-          setMakingRestCall(false);
-          console.log(error);
-        });
-    }
+    // if (
+    //   confirm(`Would you like to ${props.transactionType} shares of this team?`)
+    // ) {
+    // alert(`Should make call to ${props.transactionType} teamid: ${props.teamId} for ${sliderValue} shares`)
+    setMakingRestCall(true);
+    axios
+      .post(
+        `/api/trade-action/${props.transactionType}?teamId=${props.teamId}&volume=${sliderValue}`
+      )
+      .then(response => {
+        setMakingRestCall(false);
+        window.location.reload();
+      })
+      .catch(error => {
+        setMakingRestCall(false);
+        console.log(error);
+      });
+    // }
   };
 
   const button = (): JSX.Element => {
