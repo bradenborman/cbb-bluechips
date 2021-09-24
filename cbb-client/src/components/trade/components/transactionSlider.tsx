@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { TransactionAction } from "../../../models/TransactionAction";
 import axios from "axios";
+import Loader from "react-loader-spinner";
 
 export enum TransactionType {
   BUY = "Buy",
@@ -18,9 +19,10 @@ export interface ITransactionSliderProps {
 export const TransactionSlider: React.FC<ITransactionSliderProps> = (
   props: ITransactionSliderProps
 ) => {
-  const btnTxt = props.transactionType;
+  const [giveWarning, setGiveWarning] = useState<boolean>(false);
 
   const [sliderValue, setSliderValue] = useState<number>(0);
+  const [makingRestCall, setMakingRestCall] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
     setSliderValue(e.target.value);
@@ -40,20 +42,50 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
 
   const handleButtonClick = () => {
     if (
+      giveWarning &&
       confirm(`Would you like to ${props.transactionType} shares of this team?`)
     ) {
       // alert(`Should make call to ${props.transactionType} teamid: ${props.teamId} for ${sliderValue} shares`)
+      setMakingRestCall(true);
       axios
         .post(
           `/api/trade-action/${props.transactionType}?teamId=${props.teamId}&volume=${sliderValue}`
         )
         .then(response => {
-          console.log(response.data);
+          setMakingRestCall(false);
+          window.location.reload();
         })
         .catch(error => {
+          setMakingRestCall(false);
           console.log(error);
         });
     }
+  };
+
+  const button = (): JSX.Element => {
+    const btnTxt = props.transactionType;
+
+    if (!makingRestCall)
+      return (
+        <button
+          disabled={sliderValue < 1 || props.zeroValue}
+          id="buyBTN"
+          className="sell btn btn-success tradeBTN"
+          onClick={handleButtonClick}
+        >
+          {btnTxt} {sliderValue > 0 && !props.zeroValue ? sliderValue : null}
+        </button>
+      );
+
+    return (
+      <button
+        disabled={true}
+        id="buyBTN"
+        className="sell btn btn-success tradeBTN"
+      >
+        <Loader type="ThreeDots" color="white" height={30} width={30} />
+      </button>
+    );
   };
 
   return (
@@ -67,14 +99,7 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
         name="volume"
         onChange={handleChange}
       />
-      <button
-        disabled={sliderValue < 1}
-        id="buyBTN"
-        className="sell btn btn-success tradeBTN"
-        onClick={handleButtonClick}
-      >
-        {btnTxt} {sliderValue > 0 ? sliderValue : null}
-      </button>
+      {button()}
     </div>
   );
 };
