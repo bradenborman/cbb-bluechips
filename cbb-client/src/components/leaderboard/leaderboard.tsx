@@ -7,10 +7,15 @@ import { ILeaderBoardUser } from "../../models/leaderboardUser";
 import Loader from "react-loader-spinner";
 
 import axios from "axios";
+import { DonationCard } from "./components/donationCard";
 
 export interface ILeaderboardProps {
   paypalDonationAmount: number;
 }
+
+/*
+https://github.com/Luehang/react-paypal-button-v2
+*/
 
 export const Leaderboard: React.FC<ILeaderboardProps> = (
   props: ILeaderboardProps
@@ -57,18 +62,13 @@ export const Leaderboard: React.FC<ILeaderboardProps> = (
               <ul>{pastWinners}</ul>
             </Card.Body>
           </Card>
-          <Card id="donationSection">
-            <Card.Body>
-              <Card.Text>Thank you for playing.</Card.Text>
-              <Card.Text className="text-center" id="paypalMessage">
-                A $50,000 bonus will be credited with a donation.
-              </Card.Text>
-              <Card.Text>
-                Click PayPal button to donate: ${props.paypalDonationAmount}
-              </Card.Text>
-              <div id="paypal-button-container"></div>
-            </Card.Body>
-          </Card>
+          <DonationCard
+            clientId={
+              "AbiTp3MyLJCqlqUhgWWDpFC-M8VRE6bHA1GHs40nCam1UpxkHRpFRlkbP_SpwAUGguGKojDw-6a8sWtd"
+            }
+            paypalDonationAmount={props.paypalDonationAmount}
+            hasAlreadyDonated={false}
+          />
         </Col>
       </Row>
     </Page>

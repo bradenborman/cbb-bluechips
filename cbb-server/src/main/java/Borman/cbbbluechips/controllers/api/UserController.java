@@ -76,12 +76,11 @@ public class UserController extends AuthenticatedController {
         return ResponseEntity.ok().build();
     }
 
-    //TODO
     @PostMapping("/paypal-transaction-complete")
     ResponseEntity<Boolean> payEntryFee(@RequestBody PaypalDonationRequest paypalDonationRequest) {
         logger.info("Paid endpoint hit. PayEntryFeeRequest: {}", paypalDonationRequest.toString());
-        userService.updatePlayerHasDonated(retrieveLoggedInUserId());
-        emailService.sendUpdateEmail(paypalDonationRequest);
+//        userService.updatePlayerHasDonated(retrieveLoggedInUserId());
+//        emailService.sendUpdateEmail(paypalDonationRequest);
         return ResponseEntity.ok(true);
     }
 
