@@ -13,6 +13,8 @@ import { IUserGamedata } from "../../models/userGameData";
 import Loader from "react-loader-spinner";
 import { getDisplayTextCurrentRound } from "../../utilities/currentRoundUtility";
 import { useHistory } from "react-router";
+import { IMarketResponse } from "../../models/MarketResponse";
+import { IMatchup } from "../../models/matchup";
 
 export interface IPortfolioProps {}
 
@@ -26,6 +28,9 @@ export const Portfolio: React.FC<IPortfolioProps> = (
   const [userInvestments, setUserInvestments] = useState<IInvestment[]>();
   const [gameData, setGameData] = useState<IGamedata>();
   const [userGameData, setUserGameGata] = useState<IUserGamedata>();
+
+  //Upcoming games
+  const [upcomingGames, setUpcomingGames] = useState<IMarketResponse>();
 
   useEffect(() => {
     axios
@@ -58,6 +63,17 @@ export const Portfolio: React.FC<IPortfolioProps> = (
       })
       .catch(error => {
         console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/api/upcoming-games")
+      .then(response => {
+        setUpcomingGames(response.data);
+      })
+      .catch(error => {
+        console.log("Error getting upcoming games");
       });
   }, []);
 
@@ -154,6 +170,35 @@ export const Portfolio: React.FC<IPortfolioProps> = (
     );
   };
 
+  const upComingGamesBody = (): JSX.Element => {
+    if (upcomingGames == undefined)
+      return (
+        <div className="loading-wrapper">
+          <Loader type="TailSpin" color="#00BFFF" height={100} width={100} />
+        </div>
+      );
+
+    const games = upcomingGames.matchups.map(
+      (matchup: IMatchup, index: number) => {
+        return (
+          <div key={index} className="upcoming-game">
+            <span>
+              <img src={"/img/teams/" + matchup.team1.teamName + ".png"} />
+              {matchup.team1.teamName}
+            </span>
+            <span className="startTime">({matchup.startTime})</span>
+            <span>
+              {matchup.team2.teamName}
+              <img src={"/img/teams/" + matchup.team2.teamName + ".png"} />
+            </span>
+          </div>
+        );
+      }
+    );
+
+    return <Card.Body className="upcoming-games-card">{games}</Card.Body>;
+  };
+
   return (
     <Page pageId="portfolio-wrapper">
       <Row className="game-data">
@@ -179,7 +224,7 @@ export const Portfolio: React.FC<IPortfolioProps> = (
                 <i className="fa fa-clock"></i>Upcoming Games
               </Card.Title>
             </Card.Header>
-            <Card.Body></Card.Body>
+            {upComingGamesBody()}
           </Card>
         </Col>
       </Row>

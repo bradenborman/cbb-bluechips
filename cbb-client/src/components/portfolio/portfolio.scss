@@ -9,11 +9,28 @@
     box-shadow: 2px 3px #1e5799;
 
     &.card-details {
-      min-height: 230px;
+      // min-height: 230px;
     }
 
     .card-body {
-      padding: 0.5em;
+      padding: 0px;
+
+      &.upcoming-games-card {
+        padding: 0em;
+        .upcoming-game {
+          text-align: center;
+          border-bottom: 1px solid black;
+          span {
+            img {
+              max-height: 55px;
+            }
+
+            &.startTime {
+              margin: 0px 1em;
+            }
+          }
+        }
+      }
     }
 
     .loading-wrapper {

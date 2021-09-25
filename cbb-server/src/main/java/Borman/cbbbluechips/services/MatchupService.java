@@ -13,6 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.MAX_VALUE;
+
 @Service
 public class MatchupService {
 
@@ -27,12 +29,26 @@ public class MatchupService {
     }
 
     public MarketResponse todaysMarket() {
+        return todaysMarket(MAX_VALUE);
+    }
+
+    public MarketResponse upComingGames() {
+        MarketResponse response = todaysMarket(3);
+        //Remove games that's that have already been played
+        response.setMatchups(response.getMatchups().stream()
+                .filter(x -> x.getStartTimeDateTime().isAfter(LocalDateTime.now()))
+                .collect(Collectors.toList()));
+        return response;
+    }
+
+    MarketResponse todaysMarket(int limitAmount) {
 
         List<Matchup> teamsPlayingToday = teamService.teamsPlayingToday()
                 .stream()
                 .filter(Team::isNextGameHome) //filters out only home teams
                 .map(this::createMatchup)
                 .sorted(Matchup::compareTo)
+                .limit(limitAmount)
                 .collect(Collectors.toList());
 
         return new MarketResponse(teamsPlayingToday);
@@ -60,4 +76,5 @@ public class MatchupService {
         matchup.setStartTime(startTime.format(DateTimeFormatter.ofPattern("h:mm a")));
         return matchup;
     }
+
 }

@@ -23,4 +23,9 @@ public class MarketController extends AuthenticatedController {
         return ResponseEntity.ok(matchupService.todaysMarket());
     }
 
+    @GetMapping("/upcoming-games")
+    public ResponseEntity<MarketResponse> upComingGames() {
+        return ResponseEntity.ok(matchupService.upComingGames());
+    }
+
 }

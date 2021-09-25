@@ -7,7 +7,7 @@ import {
 import Cookies from "universal-cookie";
 
 import { Navbar } from "../navbar/navbar";
-import { Market } from "../market/Market";
+import { Market } from "../market/market";
 import { Portfolio } from "../portfolio/portfolio";
 import { Trade } from "../trade/trade";
 import { Calculator } from "../calculator/calculator";
