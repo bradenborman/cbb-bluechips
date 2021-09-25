@@ -16,6 +16,8 @@ import { useHistory } from "react-router";
 import { IMarketResponse } from "../../models/MarketResponse";
 import { IMatchup } from "../../models/matchup";
 
+import moment from "moment-timezone";
+
 export interface IPortfolioProps {}
 
 export const Portfolio: React.FC<IPortfolioProps> = (
@@ -178,18 +180,37 @@ export const Portfolio: React.FC<IPortfolioProps> = (
         </div>
       );
 
+    if (upcomingGames?.matchups.length < 1)
+      return (
+        <Card.Body>
+          <h6 id="no-more-games">No games remaining today</h6>
+        </Card.Body>
+      );
+
     const games = upcomingGames.matchups.map(
       (matchup: IMatchup, index: number) => {
+        const startTimeParsed = moment(matchup.startTime, ["h:mm a"]).tz(
+          "America/Chicago"
+        );
+        const startTimeLocalTimeZone: string = startTimeParsed
+          .tz(
+            new window.Intl.DateTimeFormat().resolvedOptions().timeZone //gets timezone from users browser
+          )
+          .format("h:mm a");
+
         return (
           <div key={index} className="upcoming-game">
             <span>
               <img src={"/img/teams/" + matchup.team1.teamName + ".png"} />
               {matchup.team1.teamName}
             </span>
-            <span className="startTime">({matchup.startTime})</span>
+            <span className="startTime">({startTimeLocalTimeZone})</span>
             <span>
               {matchup.team2.teamName}
-              <img src={"/img/teams/" + matchup.team2.teamName + ".png"} />
+              <img
+                loading="lazy"
+                src={"/img/teams/" + matchup.team2.teamName + ".png"}
+              />
             </span>
           </div>
         );

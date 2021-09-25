@@ -14,7 +14,9 @@
 
     .card-body {
       padding: 0px;
-
+      h6#no-more-games {
+        margin: 10px;
+      }
       &.upcoming-games-card {
         padding: 0em;
         .upcoming-game {
@@ -196,6 +198,31 @@
 
     .card {
       margin-bottom: 2vh;
+
+      .card-body {
+        padding: 0px;
+
+        &.upcoming-games-card {
+          padding: 0em;
+          .upcoming-game {
+            border-bottom: 1px solid black;
+            text-align: center;
+            padding: 10px 0px;
+            font-size: 0.8em;
+            span {
+              display: inline-block;
+              img {
+                max-height: 30px;
+                margin: 0px 5px;
+              }
+
+              &.startTime {
+                margin: 0px 3px;
+              }
+            }
+          }
+        }
+      }
     }
 
     padding-bottom: 5em;
