@@ -4,7 +4,7 @@ import { TeamCard } from "./teamcard";
 import { IMatchup } from "../../../models/matchup";
 import classNames from "classnames";
 
-import moment from "moment";
+import moment from "moment-timezone";
 import { ITeam } from "../../../models/team";
 import axios from "axios";
 
@@ -26,8 +26,12 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
 
   console.log(props.matchup.startTime);
 
-  const startTimeParsed = moment(props.matchup.startTime, ["h:mm a"]);
-  const loadedInAfterStartTime = moment().isAfter(startTimeParsed);
+  const startTimeParsed = moment(props.matchup.startTime, ["h:mm a"]).tz(
+    "America/Chicago"
+  );
+  const loadedInAfterStartTime: boolean = moment()
+    .tz("America/Chicago")
+    .isAfter(startTimeParsed);
 
   useEffect(() => {
     if (makingCallToLock) {
@@ -53,7 +57,7 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
       //Before loaded in starttime
 
       var interval = setInterval(() => {
-        const rightNow = moment();
+        const rightNow = moment().tz("America/Chicago");
         if (
           startTimeParsed.diff(rightNow, "minutes") < 15 &&
           rightNow.isBefore(startTimeParsed)
@@ -124,7 +128,12 @@ export const Matchup: React.FC<IMatchupProps> = (props: IMatchupProps) => {
     if (props.matchup.startTime == countdownUntilLock)
       return (
         <span className="start-time">
-          <i className="fas fa-clock" /> {countdownUntilLock}
+          <i className="fas fa-clock" />{" "}
+          {startTimeParsed
+            .tz(
+              new window.Intl.DateTimeFormat().resolvedOptions().timeZone //gets timezone from users browser
+            )
+            .format("h:mm a")}
         </span>
       );
     else return <span className="start-time">{countdownUntilLock}</span>;
