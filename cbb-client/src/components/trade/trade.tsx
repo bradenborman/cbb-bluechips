@@ -111,6 +111,7 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
           <Row>
             <Col md={6} lg={4}>
               <TransactionSlider
+                locked={teamExchangeDetailsResponse.locked}
                 transactionType={TransactionType.BUY}
                 max={teamExchangeDetailsResponse.maximumCanPurchase}
                 teamId={teamExchangeDetailsResponse.teamId}
@@ -123,6 +124,7 @@ export const Trade: React.FC<ITradeProps> = (props: ITradeProps) => {
             </Col>
             <Col md={6} lg={4}>
               <TransactionSlider
+                locked={teamExchangeDetailsResponse.locked}
                 transactionType={TransactionType.SELL}
                 max={teamExchangeDetailsResponse.amountSharesOwned}
                 teamId={teamExchangeDetailsResponse.teamId}

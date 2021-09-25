@@ -13,6 +13,7 @@ export interface TransactionAction {
 }
 
 export interface ITransactionSliderProps {
+  locked: boolean;
   transactionType: TransactionType;
   max: number;
   teamId: string;
@@ -59,6 +60,7 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
       .catch(error => {
         setMakingRestCall(false);
         console.log(error);
+        alert(error.response.data);
       });
     // }
   };
@@ -66,17 +68,22 @@ export const TransactionSlider: React.FC<ITransactionSliderProps> = (
   const button = (): JSX.Element => {
     const btnTxt = props.transactionType;
 
-    if (!makingRestCall)
+    if (!makingRestCall) {
+      const unlockedTxt =
+        btnTxt + " " + (sliderValue > 0 && !props.zeroValue ? sliderValue : "");
+      const lockedTxt = <i className="fa fa-lock" />;
+
       return (
         <button
-          disabled={sliderValue < 1 || props.zeroValue}
+          disabled={sliderValue < 1 || props.zeroValue || props.locked}
           id="buyBTN"
           className="sell btn btn-success tradeBTN"
           onClick={handleButtonClick}
         >
-          {btnTxt} {sliderValue > 0 && !props.zeroValue ? sliderValue : null}
+          {props.locked ? lockedTxt : unlockedTxt}
         </button>
       );
+    }
 
     return (
       <button

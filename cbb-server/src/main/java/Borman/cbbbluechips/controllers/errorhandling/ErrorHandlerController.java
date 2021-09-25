@@ -1,5 +1,6 @@
 package Borman.cbbbluechips.controllers.errorhandling;
 
+import Borman.cbbbluechips.models.exceptions.TeamLockedOnTransactionException;
 import Borman.cbbbluechips.models.exceptions.UserAlreadyExistsException;
 import Borman.cbbbluechips.models.exceptions.UserNotLoggedInException;
 import org.slf4j.Logger;
@@ -23,6 +24,12 @@ public class ErrorHandlerController {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<String> userAlreadyExistsException(Exception e) {
         logger.warn("UserAlreadyExistsException: {}", e.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(TeamLockedOnTransactionException.class)
+    public ResponseEntity<String> teamLockedOnTransactionException(Exception e) {
+        logger.warn("TeamLockedOnTransactionException: {}", e.getLocalizedMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getLocalizedMessage());
     }
 

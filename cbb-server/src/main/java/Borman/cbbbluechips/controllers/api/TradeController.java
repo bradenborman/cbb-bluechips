@@ -42,7 +42,6 @@ public class TradeController extends AuthenticatedController {
         return ResponseEntity.ok().build();
     }
 
-    //TODO verify
     @PostMapping("/trade-action/Buy")
     public synchronized ResponseEntity<Void> buyTeam(@RequestParam(value = "teamId") String teamId, @RequestParam(value = "volume") int volume) {
         String user = retrieveLoggedInUserId();
@@ -53,18 +52,6 @@ public class TradeController extends AuthenticatedController {
         return ResponseEntity.ok().build();
     }
 
-//    //TODO verify
-//    @RequestMapping("/trade/{team_Id}")
-//    public String tradeCentral(@PathVariable("team_Id") String teamId, Model model) {
-//        User user = userService.getUserLoggedIn(getLoggedInUserId());
-//        model.addAttribute("user", user);
-//        model.addAttribute("team", teamService.getTeamById(teamId));
-//        model.addAttribute("details", tradeCentralService.fillTradeCentralDetails(user, teamId));
-//        return "trade";
-//    }
-//
-
-//
 //    //TODO verify
 //    //note: Concerns include selling teams that are already sold in another tab or buying too much same way.. by selling/buying alt way
 //    @PostMapping("/trade/sell-all")

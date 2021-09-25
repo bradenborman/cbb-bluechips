@@ -5,6 +5,7 @@ import Borman.cbbbluechips.daos.TeamDao;
 import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.MarketValue;
 import Borman.cbbbluechips.models.Team;
+import Borman.cbbbluechips.models.exceptions.TeamLockedOnTransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -84,7 +85,9 @@ public class TeamService {
 
 
     public boolean isTeamUnLocked(String teamId) {
-        return !teamDao.isTeamLocked(teamId);
+        if (teamDao.isTeamLocked(teamId))
+            throw new TeamLockedOnTransactionException(teamId);
+        return true;
     }
 
     public List<Team> teamsPlayingToday() {
