@@ -25,7 +25,8 @@ public class PasswordRecoveringService {
         User user = userService.getUserByEmail(emailToRecover);
 
         if (user != null && user.getPassword() != null)
-            return emailService.sendPasswordRecoveryEmail(emailToRecover, user.getPassword()) ? PasswordRecoveryData.GENERIC_SUCCESS_MESSAGE : PasswordRecoveryData.GENERIC_FAILED_MESSAGE;
+            return emailService.sendPasswordRecoveryEmail(emailToRecover, user.getPassword())
+                    ? PasswordRecoveryData.GENERIC_SUCCESS_MESSAGE : PasswordRecoveryData.GENERIC_FAILED_MESSAGE;
         else
             return PasswordRecoveryData.GENERIC_FAILED_MESSAGE;
     }

@@ -32,6 +32,8 @@ export const SignUp: React.FC<ISignUpProps> = (props: ISignUpProps) => {
         })
         .catch(error => {
           console.log(error);
+          setSubmitting(false);
+          alert(error.response.data);
         });
     }
   };
@@ -136,7 +138,7 @@ export const SignUp: React.FC<ISignUpProps> = (props: ISignUpProps) => {
             </div>
           </Col>
           <Col lg={4}>
-            <Button type="submit" className="btn-block">
+            <Button type="submit" disabled={submitting} className="btn-block">
               {getButtonText()}
             </Button>
           </Col>

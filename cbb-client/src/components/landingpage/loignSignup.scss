@@ -10,46 +10,51 @@
       padding: 15px 50px 0px 50px;
 
       .tab-content h2 {
-        margin: 20px;
-        margin-bottom: 40px;
+        margin: 35px;
         font-family: "Alfa Slab One";
         text-align: center;
       }
 
-      .form-group {
-        position: relative;
-        margin-bottom: 1.7rem;
-
-        .form-control-placeholder {
-          position: absolute;
-          top: 0;
-          padding: 7px 0 0 13px;
-          transition: all 200ms;
-          opacity: 0.5;
+      form {
+        .submit {
+          margin-top: 1.2em;
         }
 
-        .form-control {
-          &.error {
-            border: 1px solid red;
+        .form-group {
+          position: relative;
+          margin-bottom: 1.7rem;
+
+          .form-control-placeholder {
+            position: absolute;
+            top: 0;
+            padding: 7px 0 0 13px;
+            transition: all 200ms;
+            opacity: 0.5;
+          }
+
+          .form-control {
+            &.error {
+              border: 1px solid red;
+            }
+          }
+
+          .form-control:focus + .form-control-placeholder,
+          .form-control:valid + .form-control-placeholder {
+            font-size: 75%;
+            transform: translate3d(0, -115%, 0);
+            opacity: 1;
+          }
+          .form-control:invalid + .form-control-placeholder {
+            font-style: italic;
           }
         }
 
-        .form-control:focus + .form-control-placeholder,
-        .form-control:valid + .form-control-placeholder {
-          font-size: 75%;
-          transform: translate3d(0, -115%, 0);
-          opacity: 1;
+        #googleLogin {
+          position: absolute;
+          bottom: 8%;
+          width: 100%;
+          text-align: center;
         }
-        .form-control:invalid + .form-control-placeholder {
-          font-style: italic;
-        }
-      }
-
-      #googleLogin {
-        position: absolute;
-        bottom: 8%;
-        width: 100%;
-        text-align: center;
       }
     }
   }
@@ -57,65 +62,6 @@
 
 .feature {
   margin-top: 25px;
-}
-
-#recoverPassword:hover {
-  cursor: pointer;
-}
-
-button {
-  margin-top: 16px;
-}
-
-.title {
-  display: inline-block;
-  font-size: 5vh;
-}
-
-.title i {
-  color: #3d9970;
-}
-
-.links {
-  float: right;
-}
-
-.left {
-  padding: 20px 30px;
-}
-
-.how2Play {
-  margin: auto;
-  float: right;
-  width: 94%;
-}
-
-.how2Play h4 {
-  margin-top: 7px;
-  font-family: "Alfa Slab One";
-}
-
-.login {
-  margin: auto;
-  margin-top: 50px;
-  width: 75%;
-}
-
-.fa-cog {
-  color: grey;
-}
-
-.fa-dollar-sign {
-  color: green;
-}
-
-.fa-chart-line {
-  color: #4aa3e8;
-}
-
-.fa-user-plus,
-.fa-sign-in-alt {
-  color: grey;
 }
 
 #newFeatures h4 {
@@ -126,22 +72,4 @@ button {
 #newFeatures {
   text-align: center;
   padding: 25px;
-}
-
-footer {
-  padding: 40px;
-}
-
-#installBtn {
-  font-size: 0.7em;
-  margin-bottom: 10px;
-  display: block;
-}
-
-.my-hr {
-  display: none;
-}
-
-.floatingLbl {
-  cursor: text;
 }

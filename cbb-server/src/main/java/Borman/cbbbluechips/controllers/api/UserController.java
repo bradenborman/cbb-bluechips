@@ -5,10 +5,7 @@ import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.paypal.PaypalDonationRequest;
 import Borman.cbbbluechips.models.requests.CreateUserRequest;
 import Borman.cbbbluechips.models.responses.PhoneNumberDetails;
-import Borman.cbbbluechips.services.OwnsService;
-import Borman.cbbbluechips.services.TransactionService;
-import Borman.cbbbluechips.services.UserGroupService;
-import Borman.cbbbluechips.services.UserService;
+import Borman.cbbbluechips.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +18,22 @@ public class UserController extends AuthenticatedController {
 
     final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    UserService userService;
-    EmailService emailService;
-    OwnsService ownsService;
-    TransactionService transactionService;
-    UserGroupService userGroupService;
+    private final UserService userService;
+    private final EmailService emailService;
+    private final OwnsService ownsService;
+    private final TransactionService transactionService;
+    private final UserGroupService userGroupService;
+    private final PasswordRecoveringService passwordRecoveringService;
 
     public UserController(UserService userService, EmailService emailService, OwnsService ownsService,
-                          TransactionService transactionService, UserGroupService userGroupService) {
+                          TransactionService transactionService, UserGroupService userGroupService,
+                          PasswordRecoveringService passwordRecoveringService) {
         this.userService = userService;
         this.emailService = emailService;
         this.ownsService = ownsService;
         this.transactionService = transactionService;
         this.userGroupService = userGroupService;
+        this.passwordRecoveringService = passwordRecoveringService;
     }
 
     @PostMapping("/create-user")
@@ -83,6 +83,11 @@ public class UserController extends AuthenticatedController {
         userService.updatePlayerHasDonated(retrieveLoggedInUserId());
         emailService.sendUpdateEmail(paypalDonationRequest);
         return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/recover-email")
+    public ResponseEntity<String> forgotPassword(@RequestParam(value = "emailToRecover") String emailToRecover) {
+        return ResponseEntity.ok(passwordRecoveringService.getUsersPassword(emailToRecover));
     }
 
 

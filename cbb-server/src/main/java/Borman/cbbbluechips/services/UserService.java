@@ -4,6 +4,7 @@ import Borman.cbbbluechips.config.properties.GameRules;
 import Borman.cbbbluechips.daos.UserDao;
 import Borman.cbbbluechips.email.EmailService;
 import Borman.cbbbluechips.models.User;
+import Borman.cbbbluechips.models.exceptions.UserAlreadyExistsException;
 import Borman.cbbbluechips.models.requests.CreateUserRequest;
 import Borman.cbbbluechips.models.responses.PhoneNumberDetails;
 import Borman.cbbbluechips.utilities.UserNameUtility;
@@ -41,6 +42,7 @@ public class UserService {
 
             if (isUserAlreadyPresent(request.getEmail())) {
                 logger.info("{} already in database", request.getEmail());
+                throw new UserAlreadyExistsException(request.getEmail());
             } else {
 
                 User user = new User(

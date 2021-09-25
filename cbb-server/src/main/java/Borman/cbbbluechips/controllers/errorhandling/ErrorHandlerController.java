@@ -1,5 +1,6 @@
 package Borman.cbbbluechips.controllers.errorhandling;
 
+import Borman.cbbbluechips.models.exceptions.UserAlreadyExistsException;
 import Borman.cbbbluechips.models.exceptions.UserNotLoggedInException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,12 @@ public class ErrorHandlerController {
     public ResponseEntity<String> catchError(Exception e) {
         logger.warn("UserNotLoggedInException: {}", e.getLocalizedMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> userAlreadyExistsException(Exception e) {
+        logger.warn("UserAlreadyExistsException: {}", e.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getLocalizedMessage());
     }
 
 }

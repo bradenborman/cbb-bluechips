@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 
 import axios, { AxiosRequestConfig } from "axios";
 import classNames from "classnames";
+import Loader from "react-loader-spinner";
 
 export interface ILoginProps {
   emailToAttemptLogin: string | null;
@@ -17,6 +18,9 @@ export const Login: React.FC<ILoginProps> = (props: ILoginProps) => {
   const [password, setPassword] = useState<string>();
 
   const [loginError, setLoginError] = useState<boolean>(false);
+
+  const [resettingEmail, setResettingEmail] = useState<boolean>(false);
+  const [resettingEmailMessage, setResettingEmailMessage] = useState<string>();
 
   const handleLogin = (e: any) => {
     e.preventDefault();
@@ -36,6 +40,44 @@ export const Login: React.FC<ILoginProps> = (props: ILoginProps) => {
         setPassword(""); //clear out on failure
         setLoginError(true);
       });
+  };
+
+  const handleForgotPassword = (e: any): void => {
+    let emailToSend = email;
+
+    if (emailToSend == null || !emailToSend.includes("@"))
+      emailToSend = prompt(
+        "Please enter email to recover password?",
+        emailToSend
+      );
+
+    setResettingEmail(true);
+    axios
+      .post(`/api/recover-email?emailToRecover=${emailToSend}`)
+      .then(response => {
+        setResettingEmail(false);
+        setResettingEmailMessage(response.data);
+      })
+      .catch(error => {
+        console.log("ERROR Resetting email");
+      });
+  };
+
+  const recoverPasswordBtn = (): JSX.Element => {
+    if (resettingEmailMessage != undefined)
+      return <div>{resettingEmailMessage}</div>;
+
+    if (resettingEmail)
+      return (
+        <Button onClick={handleForgotPassword} variant="link">
+          <Loader type="ThreeDots" color="#00BFFF" height={20} width={30} />
+        </Button>
+      );
+    return (
+      <Button onClick={handleForgotPassword} variant="link">
+        Recover Password?
+      </Button>
+    );
   };
 
   return (
@@ -85,12 +127,10 @@ export const Login: React.FC<ILoginProps> = (props: ILoginProps) => {
             </div>
           </Col>
           <Col xl={12}>
-            <div className="text-center">
-              <Button variant="link">Forgot Password?</Button>
-            </div>
+            <div className="text-center">{recoverPasswordBtn()}</div>
           </Col>
           <Col lg={4}>
-            <Button type="submit" className="btn-block">
+            <Button type="submit" className="btn-block submit">
               Submit
             </Button>
           </Col>
