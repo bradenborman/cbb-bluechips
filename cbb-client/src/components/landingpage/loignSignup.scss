@@ -60,16 +60,65 @@
   }
 }
 
-.feature {
-  margin-top: 25px;
-}
-
-#newFeatures h4 {
-  font-family: "Alfa Slab One";
-  text-align: center;
-}
-
 #newFeatures {
   text-align: center;
   padding: 25px;
+
+  h4 {
+    font-family: "Alfa Slab One";
+    text-align: center;
+  }
+
+  .feature {
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+  #header-wrapper {
+    margin-bottom: 0px;
+  }
+
+  #landing-page {
+    .main {
+      margin-top: 0px;
+      border-radius: 0px;
+      background-color: white;
+      margin-bottom: 0px;
+
+      .section {
+        padding: 1em;
+      }
+
+      form {
+        .submit {
+          margin-top: 1.2em;
+        }
+      }
+    }
+
+    #newFeatures {
+      padding: 20px 10px;
+      margin-top: 50px;
+      border-top-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: #1e5799 2px 2px;
+
+      border: 1px outset #326b9b;
+
+      h4 {
+        font-family: "Alfa Slab One";
+        text-align: center;
+      }
+
+      .feature {
+        margin-top: 25px;
+        padding: 0px 0.6em;
+      }
+    }
+  }
 }

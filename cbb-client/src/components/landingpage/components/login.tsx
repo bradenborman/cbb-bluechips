@@ -47,7 +47,7 @@ export const Login: React.FC<ILoginProps> = (props: ILoginProps) => {
 
     if (emailToSend == null || !emailToSend.includes("@"))
       emailToSend = prompt(
-        "Please enter email to recover password?",
+        "Please enter email to recover password",
         emailToSend
       );
 
@@ -127,7 +127,9 @@ export const Login: React.FC<ILoginProps> = (props: ILoginProps) => {
             </div>
           </Col>
           <Col xl={12}>
-            <div className="text-center">{recoverPasswordBtn()}</div>
+            <div className="recover-password text-center">
+              {recoverPasswordBtn()}
+            </div>
           </Col>
           <Col lg={4}>
             <Button type="submit" className="btn-block submit">

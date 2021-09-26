@@ -89,7 +89,7 @@ export const Portfolio: React.FC<IPortfolioProps> = (
   const grandTotalUserInvested: number =
     userInvestments != null
       ? userInvestments.reduce(
-          (total, inv) => (total = total + inv.marketPrice),
+          (total, inv) => (total = total + inv.marketPrice * inv.amountOwned),
           0
         )
       : 0;
