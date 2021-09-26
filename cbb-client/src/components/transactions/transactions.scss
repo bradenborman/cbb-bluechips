@@ -42,6 +42,8 @@
 }
 @media screen and (max-width: 600px) {
   #transactions {
+    padding: 1em 15px 3em 15px;
+
     .showSmall {
       display: block;
       font-weight: bold;

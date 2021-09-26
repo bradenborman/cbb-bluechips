@@ -62,7 +62,7 @@
           }
 
           &.card-body {
-            padding: 0px 15px 0px 15px;
+            padding: 0px 30px 0px 30px;
           }
 
           .lock-message {
@@ -73,20 +73,24 @@
             margin-bottom: 5px;
             border: 1px solid rgb(92, 92, 92);
             background-color: #ffffff;
-            margin: 20px 0px;
+            margin-top: 20px;
 
-            .team-main-details.card-title {
-              padding: 10px;
-              text-align: left;
-              font-size: 1.3em;
+            .team-main-details {
+              margin: 0px;
+              &.card-title {
+                padding: 10px;
+                text-align: left;
+                font-size: 1.3em;
 
-              .team-name {
-                font-family: "Alfa Slab One", sans-serif;
-              }
+                .team-name {
+                  font-family: "Alfa Slab One", sans-serif;
+                }
 
-              .current-market-price {
-                float: right;
-                font-weight: bold;
+                .current-market-price {
+                  float: right;
+                  font-weight: bold;
+                  color: green;
+                }
               }
             }
 
@@ -116,12 +120,14 @@
               }
             }
 
-            .seed-info {
-              float: left;
-            }
-            .shares-outstanding {
-              font-style: italic;
-              float: right;
+            .card-footer {
+              .seed-info {
+                float: left;
+              }
+              .shares-outstanding {
+                font-style: italic;
+                float: right;
+              }
             }
           }
         }
@@ -158,6 +164,8 @@
 
 @media screen and (max-width: 600px) {
   #market-wrapper {
+    padding: 1em 15px 3em 15px;
+
     #all-matchups-wrapper {
       .match-up {
         .card.match-up-card {
@@ -175,6 +183,36 @@
 
             .start-time {
               font-size: 0.8em;
+            }
+          }
+          .match-up-body {
+            &.card-body {
+              padding: 0px 10px;
+            }
+
+            .team-card {
+              .team-main-details {
+                &.card-title {
+                  padding: 7px;
+                  font-size: 0.8em;
+                }
+              }
+
+              .point-spread-bar {
+                margin: 0px;
+                margin-bottom: 1em;
+                padding: 2px;
+                font-size: 0.8em;
+              }
+
+              .card-footer {
+                font-size: 0.8em;
+                .seed-info {
+                  margin: 0px;
+                }
+                .shares-outstanding {
+                }
+              }
             }
           }
         }
