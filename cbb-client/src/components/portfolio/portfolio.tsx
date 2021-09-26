@@ -17,6 +17,7 @@ import { IMarketResponse } from "../../models/MarketResponse";
 import { IMatchup } from "../../models/matchup";
 
 import moment from "moment-timezone";
+import { ITeam } from "../../models/team";
 
 export interface IPortfolioProps {}
 
@@ -78,6 +79,10 @@ export const Portfolio: React.FC<IPortfolioProps> = (
         console.log("Error getting upcoming games");
       });
   }, []);
+
+  const handleUpcomingGameClicked = (teamToOpenInTradeView: ITeam) => {
+    history.push(`/trade/${teamToOpenInTradeView.teamId}`);
+  };
 
   const investments =
     userInvestments != null
@@ -201,7 +206,13 @@ export const Portfolio: React.FC<IPortfolioProps> = (
         return (
           <div key={index} className="upcoming-game">
             <span>
-              <img src={"/img/teams/" + matchup.team1.teamName + ".png"} />
+              <img
+                loading="lazy"
+                onClick={e => {
+                  handleUpcomingGameClicked(matchup.team1);
+                }}
+                src={"/img/teams/" + matchup.team1.teamName + ".png"}
+              />
               {matchup.team1.teamName}
             </span>
             <span className="startTime">({startTimeLocalTimeZone})</span>
@@ -209,6 +220,9 @@ export const Portfolio: React.FC<IPortfolioProps> = (
               {matchup.team2.teamName}
               <img
                 loading="lazy"
+                onClick={e => {
+                  handleUpcomingGameClicked(matchup.team2);
+                }}
                 src={"/img/teams/" + matchup.team2.teamName + ".png"}
               />
             </span>

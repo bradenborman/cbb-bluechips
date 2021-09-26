@@ -72,6 +72,22 @@
         margin-right: 10px;
         margin-bottom: 10px;
         text-align: center;
+
+        &.L {
+          font-style: italic;
+        }
+
+        &.U {
+          box-shadow: yellow 3px 3px;
+        }
+
+        &.S {
+          box-shadow: green 3px 3px;
+        }
+
+        &.F {
+          background-color: red;
+        }
       }
     }
   }
